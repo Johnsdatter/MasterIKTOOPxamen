@@ -1,0 +1,4 @@
+nor1;2;eng1;3;map1;5;efde1;11;efau1;10
+nor2;3;eng2;2;map2;5;efde2;10;efau2;11
+nor3;4;eng3;2;map3;3;efde3;9;efau3;12
+nor4;5;eng4;1;map4;4;efde4;12;efau4;9
