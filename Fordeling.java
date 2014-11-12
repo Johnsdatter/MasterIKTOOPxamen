@@ -92,10 +92,23 @@ public class Fordeling
 
 	private int ledigLærer(Lærer[] lærer)
 	{
+		/*
+		Returnerer indeks til lærer i angitt array med flest ledige timer
+		*/
+
+		int ledigIndeks = 0;
+		int flestTimer = 0
 		for (int i ; i < lærer.length ; i++)
 		{
-			// Finne og returnere indeks til høyeste lærer[].timer
+			if lærer[i].timer > flestTimer
+			{
+				flestTimer = lærer[i].timer;
+				ledigIndeks = i;
+			}
 		}
+
+		return ledigIndeks;
+
 	}	// ledigLærer
 
 	public class skoleplan
@@ -106,19 +119,53 @@ public class Fordeling
 		Ikke gjort så mye tanker rundt lagring av resultatene enda, så denne er såvidt påbegynt.
 		*/
 
+		// Datafelt
+
 		// Konstruktør
-		public skoleplan(int t, /* blablabla */ )
+		public skoleplan( Årstrinn[] årstrinn, Fag[] fag, Lærer[] lærer )
 		{
-			trinn[] trinn = new trinn[t];
+			trinn[] trinn = new trinn[årstrinn.length];
+			for ( int i = 0 ; i < trinn.length ; i++ )
+			{
+				trinn[i] = new trinn(årstrinn[i], fag, lærer);
+			}
 		}
+
+		// Metoder
+		/*
+		Trinnplan - oversikt over fag og antall timer pr. fag
+		Fagplan, pr. trinn - oversikt over antall timer pr. lærer pr. fag
+		*/
 
 		public class trinn
 		{
-			// Konstruktør
-			/* public trinn( etc.etc.etc... */
+			// Datafelt
+			private String navn; // 1. klasse/1/Vg1 e.l.
 
-			public class fag
+			// Konstruktør
+			public trinn( Årstrinn årstrinn, Fag[] fag )
 			{
+				faginfo[] faginfo = new faginfo[fag.length];
+				for ( int i = 0 ; i < faginfo.length ; i++ )
+					faginfo[i] = new faginfo( fag[i] );
+			}
+
+			// Metoder
+
+
+			public class faginfo
+			{
+				// Datafelt
+				private String navn;
+				private int[] lærerIndeks;
+				private int[] lærerTimer;
+
+				// Konstruktør
+				faginfo( Fag fag )
+					navn = fag.navn;
+
+				// Metoder
+
 
 			} // class fag
 
