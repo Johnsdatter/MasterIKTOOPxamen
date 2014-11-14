@@ -3,13 +3,14 @@ import javax.swing.JOptionPane;
 public class Fag
 {
 
-	Fag fagData = new Fag(); // opprettet konstruktør
+	public Fag() // opprettet konstruktør uten parametre, initialiserer klassen
+	{
+
+	}
 
 	// skal vi legge inn mulige fag, og ha boks der bruker kan huke av fag? Hvis vi er SÅ gode, da :P
 
-	fagData.setFag(fagInput);
-	fagData.setLarere(larerInput);
-	fagData.setRessurser(ressursInput);
+
 
 	public String getFag() // lager en get-metode som returnerer faget
 	{
