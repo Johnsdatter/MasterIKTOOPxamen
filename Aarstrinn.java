@@ -1,18 +1,28 @@
+// I denne klassen skjer det egentlig ingenting. 
+// Her bare defineres det variabler med tilhoerende datatyper, 
+// det opprettes en tom konstruktoer,
+// det opprettes en konstruktoer med argumenter (hva det betyr, har jeg ikke helt grep om ennaa )
+// og det lages set og get metoder for variablene fag og timer som kan hentes fra andre klasser
+//
+// 
+//
+
+
 public class Aarstrinn
 {
-	private int maksoppføringer ;//= antall ; fagkoder totalt ? må denne defineres eller leses det av arrayet?
-	private String[] fag; //= new String // [maksoppføringer];
-	private int[] timer; //= new String[maksoppføringer];
+	private int maksoppfÃ¸ringer ;//= antall ; fagkoder totalt ? maa denne defineres eller leses det av arrayet?
+	private String[] fag; //= new String // [maksoppfoeringer];
+	private int[] timer; //= new String[maksoppfoeringer];
 
-	//konstruktør uten parametre, initialiserer klassen
+	//konstruktoer uten parametre, initialiserer klassen
 	public Aarstrinn( int m )
 	{
-		maksoppføringer = m;
-		fag = new String[maksoppføringer];
-		timer = new int[maksoppføringer];
-		for (int i = =; i < maksoppføringer; i++)
+		maksoppfoeringer = m;
+		fag = new String[maksoppfoeringer];
+		timer = new int[maksoppfoeringer];
+		for (int i = =; i < maksoppfoeringer; i++)
 		{
-			fag[i] = 0; timer[i] = "" ;  // er det etter dette jeg gjør timer til integer?
+			fag[i] = 0; timer[i] = "" ;  // er det etter dette jeg gjoer timer til integer?
 		}
 	}
 
@@ -23,7 +33,7 @@ public class Aarstrinn
 
 	public Aarstrinn (String[] d)
 		{
-			for ( int i = 0 ; i < maksoppføringer; i++)
+			for ( int i = 0 ; i < maksoppfoeringer; i++)
 			{
 				for ( int x = 0; x < 10 ; x++)
 				{
@@ -32,7 +42,7 @@ public class Aarstrinn
 				}
 			}
 		}
-		//konstruktør med argumenter. Er det her jeg må endre String t til Int t?
+		//konstruktoer med argumenter. Er det her jeg maa endre String t til Int t?
 		public Aarstrinn (int indeks, String f, String t )
 		{
 			setFag ( indeks, f ) ;
@@ -47,12 +57,12 @@ public class Aarstrinn
 			fag [indeks] = f ;
 		}
 
-		public void setTimer ( int indeks, int t ) // må her også String t endres til Integer t?
+		public void setTimer ( int indeks, int t ) 
 		{
 			timer [indeks] = t ;
 		}
 
-		// Get metode for å hente ut verdi i de lokale array variabelene fag og timer
+		// Get metode for aa hente ut verdi i de lokale array variabelene fag og timer
 		// indeksen viser til posisjonen i arrayet verdien skal hentes fra
 		public String getTimer ( int indeks )
 		{
