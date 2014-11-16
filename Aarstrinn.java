@@ -10,7 +10,7 @@
 
 public class Aarstrinn
 {
-	private int maksoppføringer ;//= antall ; fagkoder totalt ? maa denne defineres eller leses det av arrayet?
+	private int maksoppfoeringer = 22 ;
 	private String[] fag; //= new String // [maksoppfoeringer];
 	private int[] timer; //= new String[maksoppfoeringer];
 
@@ -28,10 +28,10 @@ public class Aarstrinn
 
 	public Aarstrinn (String f, int t)
 	{
-		//kode som ordner det
+		int t = parseInt (fag)//kode som ordner det
 	}
 
-	public Aarstrinn (String[] d)
+	public Aarstrinn (String[] d) // d står for data, altså innlest fra fil
 		{
 			for ( int i = 0 ; i < maksoppfoeringer; i++)
 			{
@@ -74,5 +74,5 @@ public class Aarstrinn
 					return fag [indeks] ;
 		}
 	}
-
+}
 
