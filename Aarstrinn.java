@@ -22,13 +22,13 @@ public class Aarstrinn
 		timer = new int[maksoppfoeringer];
 		for (int i = =; i < maksoppfoeringer; i++)
 		{
-			fag[i] = 0; timer[i] = "" ;  // er det etter dette jeg gjoer timer til integer?
+			fag[i] = 0; timer[i] = "" ; 
 		}
 	}
 
 	public Aarstrinn (String f, int t)
 	{
-		int t = parseInt (fag)//kode som ordner det
+	 	
 	}
 
 	public Aarstrinn (String[] d) // d står for data, altså innlest fra fil
