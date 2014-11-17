@@ -10,7 +10,7 @@
 
 public class Aarstrinn
 {
-	private int maksoppfoeringer = 22 ;
+	private int maksoppfoeringer ;
 	private String[] fag; //= new String // [maksoppfoeringer];
 	private int[] timer; //= new String[maksoppfoeringer];
 
