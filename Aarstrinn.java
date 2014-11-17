@@ -4,8 +4,6 @@
 // det opprettes en konstruktoer med argumenter (hva det betyr, har jeg ikke helt grep om ennaa )
 // og det lages set og get metoder for variablene fag og timer som kan hentes fra andre klasser
 //
-// og jeg endrer variabelen fag fra datatype string til int?
-//
 
 
 public class Aarstrinn
