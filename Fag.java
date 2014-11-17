@@ -1,13 +1,12 @@
 /* Denne klassen samler tilgjengelige ressurser per faggruppe, uavhengig av trinnfordeling. Klassen brukes i fordelinga.
 * Kodingen er utført av Jenny Emelia Nikolaisen
-* Dette er versjon nr. 4 (17.11.14)
+* Dette er versjon nr. 5 (17.11.14)
 */
 
 public class Fag
 {
 	private String fagNavn;
 	private int laererIndeks;
-	//private int ressurs;
 
 	//konstruktør
 	public Fag()
@@ -37,22 +36,23 @@ public class Fag
 	{
 		return laerere;
 	}
-	public String getRessurser() // lager en get-metode som returnerer ressurser
-	{
-		return ressurser;
-	}
 
-	private int tilgjengeligLaerer(Laerer[] laerer) // Returnerer indeks til mest tilgjengelige lærer
+	public int tilgjengeligLaerer(Laerer[] laerer) // Returnerer indeks til mest tilgjengelige lærer
 		{
 			int laererIndeks = 0;
 			int flestTimer = 0
 
-			for (int i ; i < laerer.length ; i++) // skal i ha en startverdi??
+			for (int i = 0 ; i < laerer.length ; i++) // skal i ha en startverdi??
 			{
-				if laerer[i].timer > flestTimer
+				if (laerer[i].fordypning == fagNavn) // muligens endres, se Trudes
 				{
-					flestTimer = laerer[i].timer;
-					laererIndeks = i;
+
+					if (laerer[i].timer > flestTimer)
+					{
+						flestTimer = laerer[i].timer;
+						laererIndeks = i;
+					}
+
 				}
 			}
 
