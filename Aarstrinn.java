@@ -26,19 +26,17 @@ public class Aarstrinn
 		}
 	}
 
-	public Aarstrinn (String[] f, int [] t ) // d står for data, altså innlest fra fil
+	public Aarstrinn (String[] f, int [] t ) 
 		{
 			for ( int i = 0 ; i < maksoppfoeringer; i++)
 			{
-				for ( int x = 0; x < 10 ; x++)
-				{
-					setFag ( i , d[i]);
-					setTimer ( i , d[i+1]) ;
-				}
+				
+				setFag ( i , f [i]);
+				setTimer ( i , t [i+1]) ;
 			}
 		}
-		//konstruktoer med argumenter. Er det her jeg maa endre String t til Int t?
-		public Aarstrinn (int indeks, String f, String t )
+		//konstruktoer med argumenter. 
+		public Aarstrinn (int indeks, String f, int t )
 		{
 			setFag ( indeks, f ) ;
 			setTimer ( indeks, t ) ;
@@ -59,7 +57,7 @@ public class Aarstrinn
 
 		// Get metode for aa hente ut verdi i de lokale array variabelene fag og timer
 		// indeksen viser til posisjonen i arrayet verdien skal hentes fra
-		public String getTimer ( int indeks )
+		public int getTimer ( int indeks )
 		{
 			return timer [ indeks ] ;
 		}
