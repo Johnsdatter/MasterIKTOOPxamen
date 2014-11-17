@@ -26,11 +26,6 @@ public class Aarstrinn
 		}
 	}
 
-	public Aarstrinn (String f, int t)
-	{
-	 	
-	}
-
 	public Aarstrinn (String[] d) // d står for data, altså innlest fra fil
 		{
 			for ( int i = 0 ; i < maksoppfoeringer; i++)
