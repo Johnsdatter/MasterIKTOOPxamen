@@ -1,54 +1,62 @@
-/*
-*
-*
-*
+/* Denne klassen samler tilgjengelige ressurser per faggruppe, uavhengig av trinnfordeling. Klassen brukes i fordelinga.
+* Kodingen er utført av Jenny Emelia Nikolaisen
+* Dette er versjon nr. 4 (17.11.14)
 */
 
 public class Fag
 {
 	private String fagNavn;
-	private int lærerIndeks;
+	private int laererIndeks;
 	//private int ressurs;
 
 	//konstruktør
 	public Fag()
 	{
 		fagNavn = "";
-		lærerIndeks = 0;
+		laererIndeks = 0;
 	}
 
 	//Konstruktør
 	public Fag(String f, int l)
 	{
 		fagNavn = f;
-		lærerIndeks = metode_som_finner_indeksen_til(f);//??
+		laererIndeks = metode_som_finner_indeksen_til(f);//??
 	}
 
 	public String setFag(String f)
 	{
 		fagNavn = f;
-		lærerIndeks = metode_som_finner_indeksen_til(f);//???
+		laererIndeks = metode_som_finner_indeksen_til(f);//???
 	}
 
-	/*Fag fagData = new Fag(); // opprettet konstruktør
-	//Fag fagData = new Fag("jens", 4)
-
-	// skal vi legge inn mulige fag, og ha boks der bruker kan huke av fag? Hvis vi er SÅ gode, da :P
-
-	fagData.setFag(fagInput);
-	fagData.setLarere(larerInput);
-	fagData.setRessurser(ressursInput) */
-
-	public String getFag() // lager en get-metode som returnerer faget
+	public String getfagNavn() // lager en get-metode som returnerer faget
 	{
 		return fag;
 	}
-	public String getLarere() // lager en get-metode som returnerer lærere
+	public String getLaerere() // lager en get-metode som returnerer lærere
 	{
-		return larere;
+		return laerere;
 	}
 	public String getRessurser() // lager en get-metode som returnerer ressurser
 	{
 		return ressurser;
 	}
+
+	private int tilgjengeligLaerer(Laerer[] laerer) // Returnerer indeks til mest tilgjengelige lærer
+		{
+			int laererIndeks = 0;
+			int flestTimer = 0
+
+			for (int i ; i < laerer.length ; i++) // skal i ha en startverdi??
+			{
+				if laerer[i].timer > flestTimer
+				{
+					flestTimer = laerer[i].timer;
+					laererIndeks = i;
+				}
+			}
+
+			return laererIndeks;
+
+	}	// Slutt på tilgjengeligLaerer
 }
