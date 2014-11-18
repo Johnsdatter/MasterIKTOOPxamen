@@ -37,14 +37,14 @@ public class Fag
 		return laerere;
 	}
 
-	public int tilgjengeligLaerer(Laerer[] laerer) // Returnerer indeks til mest tilgjengelige lærer
+	public int tilgjengeligLaerer(Laerer[] laerer) // Returnerer indeks til mest tilgjengelige lærer. Public fordi Andreas skal ha tilgang.
 		{
 			int laererIndeks = 0;
 			int flestTimer = 0
 
-			for (int i = 0 ; i < laerer.length ; i++) // skal i ha en startverdi??
+			for (int i = 0 ; i < laerer.length ; i++) // Går igjennom alle lærerne
 			{
-				if (laerer[i].fordypning == fagNavn) // muligens endres, se Trudes
+				if (laerer[i].fordypning == fagNavn) // muligens endres, se Trudes koding for eksakte navn
 				{
 
 					if (laerer[i].timer > flestTimer)
@@ -59,4 +59,5 @@ public class Fag
 			return laererIndeks;
 
 	}	// Slutt på tilgjengeligLaerer
-}
+
+} // Slutt på klassen Fag
