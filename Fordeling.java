@@ -1,170 +1,238 @@
-import masse.viktige.ting
+/*
+Klassen fordeling
+.fordelLaerere
+.ledigLaerer
+	underklasse Skoleplan
+ 	.trinnPlan
+	.fagPlan
+		underklasse Trinn
+			underklasse Faginfo
+*/
 
 public class Fordeling
 {
 	/*
 	OBS: Innhenter data fra andre objekter som om alle datafelter er public.
-	Dette er selvsagt midlertidig. De kan enten byttes med get-/set-metoder eller få andre navn
-	etterhvert som de andre klassene kommer på plass.
+	Dette er selvsagt midlertidig. De kan enten byttes med get-/set-metoder eller faa andre navn
+	etterhvert som de andre klassene kommer paa plass.
 	*/
 
-	public Fordeling(Fag[] fag, Årstrinn[] årstrinn, Lærer[] lærer)
+	// Konstruktører
+
+	public Fordeling(Fag[] fag, Aarstrinn[] aarstrinn, Laerer[] laerer)
 	{
 		/*
-		Opprette instanser av visualiseringsklassene ihht. antall fag, årstrinn og lærere.
+		Opprette instanser av visualiseringsklassene ihht. antall fag, aarstrinn og laerere.
 		*/
+		Skoleplan skoleplan = new skoleplan( Aarstrinn[] aarstrinn, Fag[] fag, Laerer[] laerer );
+
 	}
 
-	// Selve fordelinga
-	public void fordelLærere()
+	// Metoder
+
+	public void fordelLaerere()
+	/*
+	Uten parametre, går ut fra standardnavn på variabler
+	*/
+
 	{
-		this.fordelLærere(Fag[], Årstrinn[], Lærer[]);
+		this.fordelLaerere(Fag[], Aarstrinn[], Laerer[]);
 	}
 
-	public void fordelLærere(Fag[] fag, Årstrinn[] årstrinn, Lærer[] lærer)
+	public void fordelLaerere(Fag[] fag, Aarstrinn[] aarstrinn, Laerer[] laerer)
+	/*
+	Metoden for selve fordelinga.
+
+	Prioriterer lærere med fordypning innenfor hvert fag, men bruker lærere uten fordypning der det trengs.
+	*/
+
 	{
 		/*
 		TODO: < Sorter Fag-objekt >
-		Enda ikke sikker. Skal kjernefag alltid komme først, så resten etter tilgjengelige fordypningstimer?
+		Enda ikke sikker. Skal kjernefag alltid komme foerst, saa resten etter tilgjengelige fordypningstimer?
 		*/
 
 		for ( int i = 0 ; i < fag.length ; i++) // For hvert enkelt fag skolen tilbyr
 		{
-			int timerBundet = 0;	// Hvor mange timer som er bundet til nå
-			for ( int j = 0 ; j < årstrinn.length ; j++ ) // For hvert årstrinn på skolen
+			int timerBundet = 0;	// Hvor mange timer som er bundet til faget
+			boolean ledigFordypning = true;
+			for ( int j = 0 ; j < aarstrinn.length ; j++ ) // For hvert aarstrinn paa skolen
 			{
-				while ( årstrinn[j].behov[i] > timerBundet ) // Faget [i] må samsvare med indeksen i Fag
+				while ( aarstrinn[j].behov[i] > timerBundet ) // Faget [i] maa samsvare med indeksen i Fag
 				{
-					int aktLærer = fag[i].tilgjengelig[0]; // Setter fordypningslærer som førstevalg
+					if (ledigFordypning)
+						fag[i].tilgjengeligLaerer(laerer); // Finner lærer med flest ledige fordypningstimer
+					int aktLaerer = fag[i].tilgjengelig[0]; // Setter denne laereren som foerstevalg
+					int timerBundetLaerer = 0;
 
-					if ( lærer[aktLærer].timer > 0 ) // Dersom aktuell lærer har fordypningstimer igjen
+					if ( laerer[aktLaerer].timer > 0 ) // Dersom aktuell laerer har fordypningstimer igjen
 					{
-						if ( lærer[aktLærer].timer > årstrinn[j].behov[i] )
+						if ( laerer[aktLaerer].timer > aarstrinn[j].behov[i] )
 						{
-							timerBundet = årstrinn[j].behov[i];
-							/*
-							TODO:
-							Bind all tid hos lærer
-							Registrer lærer i skoleplan
-							*/
+							timerBundetLaerer = aarstrinn[j].behov[i];
+							timerBundet = timerBundetLaerer;
 						}
 						else
 						{
-							timerBundet += lærer[aktLærer].timer;
-							/*
-							TODO:
-							Bind resterende tid hos lærer
-							Registrer lærer i skoleplan
-							Oppdater/sorter Fag[i].tilgjengelig
-							*/
+							timerBundetLaerer = laerer[aktLaerer].timer;
+							timerBundet += timerBundetLaerer
 						}
 					}
-					else // Ikke mer fordypningstimer igjen. Bruker annen lærer
+					else // Ikke mer fordypningstimer igjen. Bruker annen laerer
 					{
-						aktLærer = ledigLærer(lærer);
+						ledigFordypning = false;
+						aktLaerer = ledigLaerer(laerer);
 
-						if ( lærer[aktLærer].timer > årstrinn[j].behov[i] )
-							{
-							timerBundet = Årstrinn[j].behov[i];
-							/*
-							TODO:
-							Bind all tid hos lærer
-							Registrer lærer i skoleplan
-							*/
+						if ( laerer[aktLaerer].timer > aarstrinn[j].behov[i] )
+						{
+							timerBundetLaerer = Aarstrinn[j].behov[i];
+							timerBundet = timerBundetLaerer;
 						}
 						else
 						{
-							timerBundet += Lærer[aktLærer].timer;
-							/*
-							TODO:
-							Bind resterende tid hos lærer
-							Registrer lærer i skoleplan
-							*/
+							timerBundetLaerer = Laerer[aktLaerer].timer;
+							timerBundet += timerBundetLaerer;
+						}
+
+					laerer[aktLaerer].timer -= timerBundetLaerer; // Trekker bundet tid fra potten til gjeldende laerer
+					// Registrerer laerer og antall timer
+					this.skoleplan.trinn[j].faginfo[i].leggTilLaerer(aktLaerer, timerBundetLaerer);
+
 					}
 
-				}	// Fordeling Årstrinn[j]-løkke
+				}	// Fordeling Aarstrinn[j]-loekke
 
-			}	// Årstrinn[]-løkke
+			}	// Aarstrinn[]-loekke
 
-		}	// Fag[]-løkke
+		}	// Fag[]-loekke
 
-	}	// fordelLærere()
+	}	// fordelLaerere()
 
-	private int ledigLærer(Lærer[] lærer)
+	private int ledigLaerer(Laerer[] laerer)
 	{
 		/*
-		Returnerer indeks til lærer i angitt array med flest ledige timer
+		Returnerer indeks til laerer i angitt array med flest ledige timer
 		*/
 
 		int ledigIndeks = 0;
 		int flestTimer = 0
-		for (int i ; i < lærer.length ; i++)
+		for (int i ; i < laerer.length ; i++)
 		{
-			if lærer[i].timer > flestTimer
+			if laerer[i].timer > flestTimer
 			{
-				flestTimer = lærer[i].timer;
+				flestTimer = laerer[i].timer;
 				ledigIndeks = i;
 			}
 		}
 
 		return ledigIndeks;
 
-	}	// ledigLærer
+	}	// ledigLaerer
 
-	public class skoleplan
+	public class Skoleplan
 	{
 		/*
 		For lagring av fordeling og visualisering/printing av resultat/planer
-
-		Ikke gjort så mye tanker rundt lagring av resultatene enda, så denne er såvidt påbegynt.
 		*/
 
 		// Datafelt
 
-		// Konstruktør
-		public skoleplan( Årstrinn[] årstrinn, Fag[] fag, Lærer[] lærer )
+		// Konstruktoer
+		public skoleplan( Aarstrinn[] aarstrinn, Fag[] fag, Laerer[] laerer )
 		{
-			trinn[] trinn = new trinn[årstrinn.length];
+			trinn[] trinn = new trinn[aarstrinn.length];
 			for ( int i = 0 ; i < trinn.length ; i++ )
 			{
-				trinn[i] = new trinn(årstrinn[i], fag, lærer);
+				trinn[i] = new trinn(aarstrinn[i], fag, laerer);
 			}
 		}
 
 		// Metoder
+
+		public String trinnPlan()
 		/*
-		Trinnplan - oversikt over fag og antall timer pr. fag
-		Fagplan, pr. trinn - oversikt over antall timer pr. lærer pr. fag
+		Returnerer streng med oversikt over antall undervisningstimer for
+		hver laerer for hvert fag paa hvert trinn
 		*/
 
-		public class trinn
+		{
+			String s = "";
+
+			for (int i = 0 ; i < this.trinn.length ; i++)
+			{
+				s += this.trinnPlan(i) + "\n\n";
+			}
+
+			return s;
+		}
+
+		public String trinnPlan(int i)
+		/*
+		Samme som forrige, men kun et trinn om gangen
+		*/
+
+		{
+			private String s = "Oversikt over fag paa trinn: " + this.trinn[i].navn + "\n\n";
+
+			for (int j = 0 ; j < this.trinn[i].fagInfo ; j++)
+			{
+				if (this.trinn[i].FagInfo[j].behov > 0)
+				{
+					s += this.trinn[i].fag[j].navn + "\n";
+
+					for (int k = 0 ; this.trinn[i].fag[j].laererIndeks.size() ; k++)
+					{
+						s += "--- " + Laerer[trinn[i].fag[j].laererIndeks.get(k)].navn +
+							": " + this.trinn[i].fag[j].laererTimer.get(k) + " timer\n";
+					}
+				}
+			}
+
+			return s;
+		}
+
+		// Underklasser
+
+		public class Trinn
 		{
 			// Datafelt
 			private String navn; // 1. klasse/1/Vg1 e.l.
+			private ArrayList<Integer> laererIndeks = ArrayList();
 
-			// Konstruktør
-			public trinn( Årstrinn årstrinn, Fag[] fag )
+			// Konstruktoer
+			public trinn( Aarstrinn aarstrinn, Fag[] fag )
 			{
-				faginfo[] faginfo = new faginfo[fag.length];
-				for ( int i = 0 ; i < faginfo.length ; i++ )
-					faginfo[i] = new faginfo( fag[i] );
+				navn = aarstrinn.navn;
+				FagInfo[] FagInfo = new FagInfo[fag.length];
+				for ( int i = 0 ; i < FagInfo.length ; i++ )
+					FagInfo[i] = new FagInfo( fag[i] );
 			}
 
 			// Metoder
 
+			// Underklasser
 
-			public class faginfo
+			public class FagInfo
 			{
 				// Datafelt
 				private String navn;
-				private int[] lærerIndeks;
-				private int[] lærerTimer;
+				private int behov;
+				private ArrayList<Integer> laererIndeks = new ArrayList();
+				private ArrayList<Integer> laererTimer = new ArrayList();
 
-				// Konstruktør
-				faginfo( Fag fag )
+				// Konstruktoer
+				public FagInfo( Fag fag )
+				{
 					navn = fag.navn;
+					behov = fag.behov;
+				}
 
 				// Metoder
+				public void leggTilLærer(int indeks, int timer)
+				{
+					laererIndeks.add(indeks);
+					laererTimer.add(timer);
+				}
 
 
 			} // class fag
