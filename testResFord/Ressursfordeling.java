@@ -1,22 +1,22 @@
 /***** Oppgave Ressursfordeling ********
 * Hovedklasse
 * Programmet skal ta i bruk to datasett,
-* ett med skolens behov for timefordeling pr. fag pr. årstrinn og
+* ett med skolens behov for timefordeling pr. fag pr. aarstrinn og
 * ett med tilgjengelige ressurser
-* (dvs. tilgjengelige lærere med ulik arbeidstid og kompetanse).
-* Ressursene lagres i klassene Lærer, Årstrinn og Fag, for å bli hentet inn
+* (dvs. tilgjengelige laerere med ulik arbeidstid og kompetanse).
+* Ressursene lagres i klassene Laerer, Aarstrinn og Fag, for Ã¥ bli hentet inn
 * i klassen Fordeling som leser inn skolens behov og fordeler ressursene i
-* henhold til disse. Resultatet av fordelinga skal så lagres og visualiseres
+* henhold til disse. Resultatet av fordelinga skal sÃ¥ lagres og visualiseres
 * i klassen Fordeling.
 
-< Opprette array av klassene årstrinn-, fag - og lærer  >
-< Lese fra fil for å definere array størrelser og hente data til hvert objekts datafelter.
+< Opprette array av klassene Aarstrinn-, Fag - og Laerer  >
+< Lese fra fil for Ã¥ definere array stoerrelser og hente data til hvert objekts datafelter.
 	Mulig utvidelse: Lage bruker-input >
 
-< Fordele timer og ressurser. Gjøres i/av klassen Fordeling >
-	< Opprette Fordelings-objekt og utføre nødvendige kall på dets metoder >
+< Fordele timer og ressurser. Gjoeres i/av klassen Fordeling >
+	< Opprette Fordelings-objekt og utfÃ¸re nÃ¸dvendige kall pÃ¥ dets metoder >
 
-< Gjøre kall på Fordelings-objektets metoder for å skrive oversikter til fil/dialogboks >
+< Gjoere kall pÃ¥ Fordelings-objektets metoder for Ã¥ skrive oversikter til fil/dialogboks >
 
 */
 import java.io.BufferedReader;
@@ -30,19 +30,19 @@ public class Ressursfordeling
 	public static void main( String[] args )
 	{
 		String aarstrinnFilen = "aarstrinnRessurs.txt";
-		String laererFilen = "lærerRessurs.txt";
+		String laererFilen = "lÃ¦rerRessurs.txt";
 		String fagFilen = "fagRessurs.txt";//filen inneholder alle fagkoder
 
-		// For å få tilgang til metodene i klassen Filbehandling
+		// For aa faa tilgang til metodene i klassen Filbehandling
 		Filbehandling fil = new Filbehandling();
 
-		//**** Leser filene for å dimmensjonere arrayene av ressursklassene.
+		//**** Leser filene for Ã¥ dimmensjonere arrayene av ressursklassene.
 		/* Klassen Filbehandlinginneholder to alternative metoder:
 		 * antRogK( filnavn ) og antLinjer( filnavn ).
 		 * Bruk av alt 1: int[] aarstrinnRoK = fil.antRogK( aarstrinnFilen );
-		 * metoden finner antall rader og kolonner i fila (når data er skilt med et tegn,
+		 * metoden finner antall rader og kolonner i fila (nÃ¥r data er skilt med et tegn,
 		 * her ';' semikolon). csv-format: Comma/Character-Separated Values.
-		 * og returnerer et int-array på formen [antall rader, antall kolonner].
+		 * og returnerer et int-array pÃ¥ formen [antall rader, antall kolonner].
 		 * Bruk av alt 2: int antAarstrinn = fil.antLinjer( aarstrinnFilen );
 		 * Metoden returnerer antall linjer i fila sin et helltall
 		 */
@@ -59,20 +59,23 @@ public class Ressursfordeling
 		trinnRessurs = fil.lesAarstrinnRessurs( aarstrinnFilen, trinnRessurs );
 		fagRessurs = fil.lesFagRessurs( fagFilen, fagRessurs );
 		laererRessurs = fil.lesLaererRessurs( laererFilen, laererRessurs );
-
+		
+		//******************************************************************************************
+		//***************** TEST AV set og get metoder i klassene Aarstrinn, Fag og Laerer *********
+		//******************************************************************************************
 		String s = "";
 
-		// ****** Test løkke for å lese ut trinnRessurs registrereinger
+		// ****** Test lÃ¸kke for Ã¥ lese ut trinnRessurs registrereinger
 		for( int x = 0; x < 4; x++)
 		{
 			for ( int y = 0; y < 5; y++ )
 			{
-				//JOptionPane.showMessageDialog(null, "", "", JOptionPane.PLAIN_MESSAGE );
 				s += trinnRessurs[x].getFag(y) + ", " + trinnRessurs[x].getTimer(y) + "\n";
 			}
 		}
+		JOptionPane.showMessageDialog(null, s, "", JOptionPane.PLAIN_MESSAGE );
 
-		// ****** Test løkke for å lese ut fagRessurs registrereinger
+		// ****** Test lÃ¸kke for Ã¥ lese ut fagRessurs registrereinger
 		s = "";
 		for( int x = 0; x < antFag; x++)
 		{
@@ -80,7 +83,7 @@ public class Ressursfordeling
 		}
 		JOptionPane.showMessageDialog(null, s, "", JOptionPane.PLAIN_MESSAGE );
 
-		// ****** Test løkke for å lese ut laererRessurs registrereinger
+		// ****** Test lÃ¸kke for Ã¥ lese ut laererRessurs registrereinger
 		s = "";
 		for( int x = 0; x < antLaerer; x++)
 		{
@@ -96,9 +99,11 @@ public class Ressursfordeling
 				laererRessurs[x].getTilgjengeligeTimer();
 			JOptionPane.showMessageDialog(null, s, "Ressursbehandling", JOptionPane.PLAIN_MESSAGE );
 		}
+		
+		//****** Sjekker om set metoden for tilgjengeligeTimer i Laerer klassen fungerer
 		laererRessurs[2].setTilgjengeligeTimer( 3 );
 		s = "" + laererRessurs[2].getTilgjengeligeTimer();
-		JOptionPane.showMessageDialog(null, "opprinnelige timetall er 21. Nå (-3): " + s, "Ressursbehandling", JOptionPane.PLAIN_MESSAGE );
+		JOptionPane.showMessageDialog(null, "opprinnelige timetall er 21. NÃ¥ (-3): " + s, "Ressursbehandling", JOptionPane.PLAIN_MESSAGE );
 
 	}
 
