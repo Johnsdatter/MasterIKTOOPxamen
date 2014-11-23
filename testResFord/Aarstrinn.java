@@ -14,7 +14,7 @@ public class Aarstrinn
 	private String[] fag = new String[maksoppfoeringer];
 	private int[] timer = new int[maksoppfoeringer];
 
-	//konstruktoer uten parametre, initialiserer klassen
+	//konstruktoer uten parametre, initialiserer
 	public Aarstrinn()
 	{
 		for (int i = 0; i < maksoppfoeringer; i++)
@@ -77,9 +77,9 @@ public class Aarstrinn
 		return timer[ indeks ];
 	}
 
-	public String getFag (int indeks )
+	public String getFag ( int indeks )
 	{
-		return fag[indeks];
+		return fag[ indeks ];
 	}
 
 }

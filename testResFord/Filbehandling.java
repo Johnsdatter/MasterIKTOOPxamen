@@ -183,8 +183,79 @@ public class Filbehandling
 		}
 	}
 
-	public String melding()
+	//************ lesLaererRessurs
+	public Laerer[] lesLaererRessurs(String filNavn, Laerer[] laererRessurs)
 	{
-		return test;
+		String lestData = "";
+		String navn = "";
+		String[] kompetanse = new String[3];
+		String[] oppgaver = new String[3];
+		int spesielleTimer;
+		int stillingsProsent;
+		int tilgjengeligeTimer;
+		BufferedReader br = null;
+		int i = 0;
+
+		String s = "filinnhold ikke lest";
+		try
+		{
+			s = "";
+			br = new BufferedReader( new FileReader(filNavn) );
+			while( ( lestData = br.readLine() ) != null )
+			{
+				String[] data = lestData.split(";");
+				navn = data[0];
+				kompetanse[0] = data[1];
+				kompetanse[1] = data[2];
+				kompetanse[2] = data[3];
+				oppgaver[0] = data[4];
+				oppgaver[1] = data[5];
+				oppgaver[2] = data[6];
+				spesielleTimer = Integer.parseInt( data[7] );
+				stillingsProsent = Integer.parseInt( data[8] );
+				tilgjengeligeTimer = Integer.parseInt( data[9] );
+
+				laererRessurs[i] = new Laerer( navn, kompetanse, oppgaver, spesielleTimer, stillingsProsent, tilgjengeligeTimer );
+
+				//Viser hver linje som leses fra fil
+				//melding( kompetanse[0] + ", " + kompetanse[1] + ", " +kompetanse[2] );
+
+				/*for ( int v = 0; v < data.length/2; v++ )
+				{
+
+					test += trinn[i].getFag(v) + trinn[i].getTimer(v) + "\n";
+				}*/
+				i++;
+			}
+			//melding( laererRessurs[2].getSpesialKompetanse(1) + ", " + laererRessurs[3].getSpesialKompetanse(1) );
+		}
+		catch (IOException e)
+		{
+			JOptionPane.showMessageDialog(null, "",
+				e.toString(), JOptionPane.PLAIN_MESSAGE );
+		}
+		finally
+		{
+			if ( br != null )
+			{
+				try
+				{
+					br.close();
+				}
+				catch (IOException e)
+				{
+					JOptionPane.showMessageDialog(null, "",
+						e.toString(), JOptionPane.PLAIN_MESSAGE );
+				}
+			}
+			return laererRessurs;
+		}
+
+	}
+	//************ slutt lesLaererRessurs
+
+	private void melding( String m )
+	{
+		JOptionPane.showMessageDialog(null, m, "Fra filbehandling", JOptionPane.PLAIN_MESSAGE );
 	}
 }

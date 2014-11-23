@@ -1,1 +1,6 @@
-nor;2;eng3;map;5;efde;10;efau;10;efel;12
+ruh;nor1;eng1;map1;kontaktlærer;;;2;101;21
+jph;efde1;efau1;nor3;;;;2;102;21
+erm;nor2;eng2;map2;;;;2;103;21
+jpj;efde2;efau2;nor3;;;;2;104;21
+nim;eng3;map3;;kontaktlærer;;;2;105;21
+bbr;nor4;eng4;map4;kontaktlærer;;;2;106;21

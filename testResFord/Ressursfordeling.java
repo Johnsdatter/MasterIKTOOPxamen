@@ -48,25 +48,21 @@ public class Ressursfordeling
 		 */
 		int antAarstrinn = fil.antLinjer( aarstrinnFilen );
 		int antFag = fil.antLinjer( fagFilen );
-		// iie: int antLaerer = fil.antLinjer( laererFilen );
-
+		int antLaerer = fil.antLinjer( laererFilen );
 
 		//lager array-objekter av ressursklassene
-		Aarstrinn[] trinnRessurs = new Aarstrinn[antAarstrinn];
-		Fag[] fagRessurs = new Fag[antFag];
-		// Ikke Implementert Ennå = iie: Laerer[] laererRessurs = new Laerer[antallLærer];
+		Aarstrinn[] trinnRessurs = new Aarstrinn[ antAarstrinn ];
+		Fag[] fagRessurs = new Fag[ antFag ];
+		Laerer[] laererRessurs = new Laerer[ antLaerer ];
 
 		//**** Fyller objektene med informasjonen i datafilene
-		trinnRessurs = fil.lesAarstrinnRessurs(aarstrinnFilen, trinnRessurs);
-		fagRessurs = fil.lesFagRessurs(fagFilen, fagRessurs);
-
-		//JOptionPane.showMessageDialog(null, test, "fra array",JOptionPane.PLAIN_MESSAGE );
-		//JOptionPane.showMessageDialog(null, fil.melding(), "Konstruktør", JOptionPane.PLAIN_MESSAGE );
+		trinnRessurs = fil.lesAarstrinnRessurs( aarstrinnFilen, trinnRessurs );
+		fagRessurs = fil.lesFagRessurs( fagFilen, fagRessurs );
+		laererRessurs = fil.lesLaererRessurs( laererFilen, laererRessurs );
 
 		String s = "";
 
 		// ****** Test løkke for å lese ut trinnRessurs registrereinger
-		/*
 		for( int x = 0; x < 4; x++)
 		{
 			for ( int y = 0; y < 5; y++ )
@@ -75,25 +71,35 @@ public class Ressursfordeling
 				s += trinnRessurs[x].getFag(y) + ", " + trinnRessurs[x].getTimer(y) + "\n";
 			}
 		}
-		*/
 
 		// ****** Test løkke for å lese ut fagRessurs registrereinger
+		s = "";
 		for( int x = 0; x < antFag; x++)
 		{
 				s += fagRessurs[x].getfagNavn() + "\n";
 		}
-
 		JOptionPane.showMessageDialog(null, s, "", JOptionPane.PLAIN_MESSAGE );
 
-
-
-		//int antFag = antLinjer( fagFil );
-		//int antLærere = antLinjer( lærerFil );*/
-
-		/*Lager arrayene i riktig størrelse
-		Årstrinn[] trinn;
-		Fag[] fag = new Fag[antFag];
-		Lærer[] lærere = new Lærer[antLærere];*/
+		// ****** Test løkke for å lese ut laererRessurs registrereinger
+		s = "";
+		for( int x = 0; x < antLaerer; x++)
+		{
+			s = laererRessurs[x].getLaererNavn() + "\n" +
+				laererRessurs[x].getSpesialKompetanse(0) + "\n" +
+				laererRessurs[x].getSpesialKompetanse(1) + "\n" +
+				laererRessurs[x].getSpesialKompetanse(2) + "\n" +
+				laererRessurs[x].getSpesielleOppgaver(0) + "\n" +
+				laererRessurs[x].getSpesielleOppgaver(1) + "\n" +
+				laererRessurs[x].getSpesielleOppgaver(2) + "\n" +
+				laererRessurs[x].getSpesielleTimer() + "\n" +
+				laererRessurs[x].getStillingsProsent() + "\n" +
+				laererRessurs[x].getTilgjengeligeTimer();
+			JOptionPane.showMessageDialog(null, s, "Ressursbehandling", JOptionPane.PLAIN_MESSAGE );
+		}
+		laererRessurs[2].setTilgjengeligeTimer( 3 );
+		s = "" + laererRessurs[2].getTilgjengeligeTimer();
+		JOptionPane.showMessageDialog(null, "opprinnelige timetall er 21. Nå (-3): " + s, "Ressursbehandling", JOptionPane.PLAIN_MESSAGE );
 
 	}
+
 }
