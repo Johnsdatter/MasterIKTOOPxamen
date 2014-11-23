@@ -2,7 +2,7 @@
  * Brukes for å lagre tilgjengelige ressurser for bruk i fordelingsklassen.
  * Kodingen er utfoert av Jenny Emelia Nikolaisen
  * Bearbeiding av Rune
- * Dette er versjon nr. 2 (23.11.14)
+ * Dette er versjon nr. 2 (23.11.14), utenkompileringsfeil
 */
 
 public class Laerer
@@ -17,12 +17,6 @@ public class Laerer
 	//konstruktoer
 	public Laerer()
 	{
-		laererNavn = "";
-		spesialKompetanse = {"", "", ""};
-		spesielleOppgaver = {"", "", ""};
-		spesielleTimer = 0;
-		stillingsProsent = 0;
-		tilgjengeligeTimer = 0;
 	}
 
 	//Konstruktør
@@ -38,7 +32,7 @@ public class Laerer
 
 	//Gir mulighet for å endre timetallet etterhvert som lærer knyttes til oppgaver
 	//Sett fra hovedklassen er dette eneste variabel som krever set metode.
-	public String setTilgjengeligeTimer( int t )
+	public void setTilgjengeligeTimer( int t )
 	{
 		tilgjengeligeTimer -= t;
 	}
