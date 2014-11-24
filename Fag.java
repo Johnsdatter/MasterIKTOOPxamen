@@ -19,13 +19,11 @@ public class Fag
 	public Fag(String f, int l)
 	{
 		fagNavn = f;
-		laererIndeks = metode_som_finner_indeksen_til(f);//??
 	}
 
 	public String setFag(String f)
 	{
 		fagNavn = f;
-		laererIndeks = metode_som_finner_indeksen_til(f);//???
 	}
 
 	public String getfagNavn() // lager en get-metode som returnerer faget
