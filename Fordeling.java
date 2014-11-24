@@ -106,6 +106,8 @@ public class Fordeling
 
 		}	// Fag[]-loekke
 
+		this.skoleplan.fordelLaerere();
+
 	}	// fordelLaerere()
 
 	private int ledigLaerer(Laerer[] laerer)
@@ -189,6 +191,23 @@ public class Fordeling
 			}
 
 			return s;
+		}
+
+		public void finnTrinnLaerere()
+		{
+			for ( int i = 0 ; i < this.trinn.length ; i++ )
+			{
+				this.trinn[i].laererIndeks.clear;
+
+				for ( int j = 0 ; j < this.trinn[i].FagInfo.length ; j++ )
+				{
+					for ( int k = 0 ; k < this.trinn[i].FagInfo[j].laererIndeks.size() ; k++ )
+					{
+						if (!this.trinn[i].laererIndeks.contains(this.trinn[i].FagInfo[j].laererIndeks(k))
+							this.trinn[i].laererIndeks.add(this.trinn[i].FagInfo[j].laererIndeks(k));
+					}
+				}
+			}
 		}
 
 		// Underklasser
