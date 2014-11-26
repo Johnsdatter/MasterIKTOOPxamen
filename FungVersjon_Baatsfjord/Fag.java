@@ -35,46 +35,32 @@ public class Fag
 	{
 		return fagNavn;
 	}
-	/* må kommentere ut denne så lenge siden objektet laerer ikke er opprettet ennå */
-
-	public String getLaerere() // lager en get-metode som returnerer lærere
-	{
-		return laerere;
-	}
 
 	public int getlaererIndeks() // lager en get-metode som returnerer lærerindeksen
 	{
 		return laererIndeks;
 	}
 
-
-/* Måte kommentere den ut da den gir kompileringsfeil på laerer[i].fordypning som ikke eksisterer.
-   Antar at den refererer til arrayet spesialKompetanse[n] i Laerer
-   Dermed må den omskrives litt*/
-
 		public void tilgjengeligLaerer() // Returnerer indeks til mest tilgjengelige lærer. Public fordi Andreas skal ha tilgang.
+										 // Nei, nå returnerer den ikke en skit.... Hva gjør den så? "Bare" gjennomgår lærerne så
+										 // Andreas skal se hvilken lærer som har flest ledige timer til enhver tid?
 		{
-			int laererIndeks = 0;
+			int lIndeks = 0;
 			int flestTimer = 0;
 
-			for (int i = 0 ; i < laerer.length ; i++) // Går igjennom alle lærerne
+			for (int i = 0 ; i < laererNavn.length ; i++) // Går igjennom alle lærerne
 			{
-				if (laerer[i].spesialKompetanse == fagNavn) // muligens endres, se Trudes koding for eksakte navn
+				if (laererNavn[i].spesialKompetanse == fagNavn)
 				{
 
-					if (laerer[i].timer > flestTimer)
+					if (laererNavn[i].tilgjengeligeTimer > flestTimer)
 					{
-						flestTimer = laerer[i].timer;
-						laererIndeks = i;
+						flestTimer = laererNavn[i].tilgjengeligeTimer;
+						lIndeks = i;
 					}
 				}
 			}
 
 		}	// Slutt på tilgjengeligLaerer
-
-	public int gettilgjengeligLaerer () // lager en get-metode som returnerer tilgjengelige lærere
-	{
-		return tilgjengeligLaerer;
-	}
 
 } // Slutt på klassen Fag
