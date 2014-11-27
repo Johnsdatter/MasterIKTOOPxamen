@@ -9,6 +9,8 @@ Klassen fordeling
 			underklasse Faginfo
 */
 
+import java.util.ArrayList;
+
 public class Fordeling
 {
 	/*
@@ -24,20 +26,17 @@ public class Fordeling
 		/*
 		Opprette instanser av visualiseringsklassene ihht. antall fag, aarstrinn og laerere.
 		*/
-		Skoleplan skoleplan = new skoleplan( Aarstrinn[] aarstrinn, Fag[] fag, Laerer[] laerer );
+		Skoleplan skoleplan = new Skoleplan( aarstrinn, fag, laerer );
 
 	}
 
 	// Metoder
 
-	public void fordelLaerere()
-	/*
-	Uten parametre, går ut fra standardnavn på variabler
-	*/
+	/*public void fordelLaerere()
 
 	{
 		this.fordelLaerere(Fag[], Aarstrinn[], Laerer[]);
-	}
+	}*/
 
 	public void fordelLaerere(Fag[] fag, Aarstrinn[] aarstrinn, Laerer[] laerer)
 	/*
@@ -54,47 +53,50 @@ public class Fordeling
 
 		for ( int i = 0 ; i < fag.length ; i++) // For hvert enkelt fag skolen tilbyr
 		{
-			int timerBundet = 0;	// Hvor mange timer som er bundet til faget
 			boolean ledigFordypning = true;
 			for ( int j = 0 ; j < aarstrinn.length ; j++ ) // For hvert aarstrinn paa skolen
 			{
-				while ( aarstrinn[j].behov[i] > timerBundet ) // Faget [i] maa samsvare med indeksen i Fag
+				int timerBundet = 0;	// Hvor mange timer som er bundet til faget
+				int behov = aarstrinn[j].getTimer(i);
+				while ( behov > timerBundet ) // Faget [i] maa samsvare med indeksen i Fag
 				{
 					if (ledigFordypning)
 						fag[i].tilgjengeligLaerer(laerer); // Finner lærer med flest ledige fordypningstimer
-					int aktLaerer = fag[i].tilgjengelig[0]; // Setter denne laereren som foerstevalg
+					int aktLaerer = fag[i].GET_LAERERINDEKS; // Setter denne laereren som foerstevalg
 					int timerBundetLaerer = 0;
+					int tilgjengeligeTimer = laerer[aktLaerer].getTilgjengeligeTimer();
 
-					if ( laerer[aktLaerer].timer > 0 ) // Dersom aktuell laerer har fordypningstimer igjen
+					if ( tilgjengeligeTimer > 0 ) // Dersom aktuell laerer har fordypningstimer igjen
 					{
-						if ( laerer[aktLaerer].timer > aarstrinn[j].behov[i] )
+						if ( tilgjengeligeTimer > behov )
 						{
-							timerBundetLaerer = aarstrinn[j].behov[i];
+							timerBundetLaerer = behov;
 							timerBundet = timerBundetLaerer;
 						}
 						else
 						{
-							timerBundetLaerer = laerer[aktLaerer].timer;
-							timerBundet += timerBundetLaerer
+							timerBundetLaerer = tilgjengeligeTimer;
+							timerBundet += timerBundetLaerer;
 						}
 					}
 					else // Ikke mer fordypningstimer igjen. Bruker annen laerer
 					{
 						ledigFordypning = false;
 						aktLaerer = ledigLaerer(laerer);
+						tilgjengeligeTimer = laerer[aktLaerer].getTilgjengeligeTimer();
 
-						if ( laerer[aktLaerer].timer > aarstrinn[j].behov[i] )
+						if ( tilgjengeligeTimer > behov )
 						{
-							timerBundetLaerer = Aarstrinn[j].behov[i];
+							timerBundetLaerer = behov;
 							timerBundet = timerBundetLaerer;
 						}
 						else
 						{
-							timerBundetLaerer = Laerer[aktLaerer].timer;
+							timerBundetLaerer = tilgjengeligeTimer;
 							timerBundet += timerBundetLaerer;
 						}
 
-					laerer[aktLaerer].timer -= timerBundetLaerer; // Trekker bundet tid fra potten til gjeldende laerer
+					laerer[aktLaerer].setTilgjengeligeTimer(timerBundetLaerer); // Trekker bundet tid fra potten til gjeldende laerer
 					// Registrerer laerer og antall timer
 					this.skoleplan.trinn[j].faginfo[i].leggTilLaerer(aktLaerer, timerBundetLaerer);
 
@@ -117,12 +119,12 @@ public class Fordeling
 		*/
 
 		int ledigIndeks = 0;
-		int flestTimer = 0
+		int flestTimer = 0;
 		for (int i ; i < laerer.length ; i++)
 		{
-			if laerer[i].timer > flestTimer
+			if (laerer[i].getTilgjengeligeTimer() > flestTimer)
 			{
-				flestTimer = laerer[i].timer;
+				flestTimer = laerer[i].getTilgjengeligeTimer();
 				ledigIndeks = i;
 			}
 		}
@@ -140,12 +142,12 @@ public class Fordeling
 		// Datafelt
 
 		// Konstruktoer
-		public skoleplan( Aarstrinn[] aarstrinn, Fag[] fag, Laerer[] laerer )
+		public Skoleplan( Aarstrinn[] aarstrinn, Fag[] fag, Laerer[] laerer )
 		{
-			trinn[] trinn = new trinn[aarstrinn.length];
+			Trinn[] trinn = new Trinn[aarstrinn.length];
 			for ( int i = 0 ; i < trinn.length ; i++ )
 			{
-				trinn[i] = new trinn(aarstrinn[i], fag, laerer);
+				trinn[i] = new Trinn(aarstrinn[i], fag);
 			}
 		}
 
@@ -174,7 +176,7 @@ public class Fordeling
 		*/
 
 		{
-			private String s = "Oversikt over fag paa trinn: " + this.trinn[i].navn + "\n\n";
+			String s = "Oversikt over fag paa trinn: " + this.trinn[i].navn + "\n\n";
 
 			for (int j = 0 ; j < this.trinn[i].fagInfo ; j++)
 			{
@@ -184,7 +186,7 @@ public class Fordeling
 
 					for (int k = 0 ; this.trinn[i].fag[j].laererIndeks.size() ; k++)
 					{
-						s += "--- " + Laerer[trinn[i].fag[j].laererIndeks.get(k)].navn +
+						s += "--- " + laerer[trinn[i].fag[j].laererIndeks.get(k)].getLaererNavn +
 							": " + this.trinn[i].fag[j].laererTimer.get(k) + " timer\n";
 					}
 				}
@@ -197,13 +199,13 @@ public class Fordeling
 		{
 			for ( int i = 0 ; i < this.trinn.length ; i++ )
 			{
-				this.trinn[i].laererIndeks.clear;
+				this.trinn[i].laererIndeks.clear();
 
 				for ( int j = 0 ; j < this.trinn[i].FagInfo.length ; j++ )
 				{
 					for ( int k = 0 ; k < this.trinn[i].FagInfo[j].laererIndeks.size() ; k++ )
 					{
-						if (!this.trinn[i].laererIndeks.contains(this.trinn[i].FagInfo[j].laererIndeks(k))
+						if (!this.trinn[i].laererIndeks.contains(this.trinn[i].FagInfo[j].laererIndeks(k)))
 							this.trinn[i].laererIndeks.add(this.trinn[i].FagInfo[j].laererIndeks(k));
 					}
 				}
@@ -216,15 +218,15 @@ public class Fordeling
 		{
 			// Datafelt
 			private String navn; // 1. klasse/1/Vg1 e.l.
-			private ArrayList<Integer> laererIndeks = ArrayList();
+			private ArrayList<Integer> laererIndeks = new ArrayList<Integer>();
 
 			// Konstruktoer
-			public trinn( Aarstrinn aarstrinn, Fag[] fag )
+			public Trinn( Aarstrinn aarstrinn, Fag[] fag )
 			{
 				navn = aarstrinn.navn;
-				FagInfo[] FagInfo = new FagInfo[fag.length];
-				for ( int i = 0 ; i < FagInfo.length ; i++ )
-					FagInfo[i] = new FagInfo( fag[i] );
+				FagInfo[] fagInfo = new FagInfo[fag.length];
+				for ( int i = 0 ; i < fagInfo.length ; i++ )
+					fagInfo[i] = new FagInfo( i, aarstrinn, fag[i]);
 			}
 
 			// Metoder
@@ -236,14 +238,14 @@ public class Fordeling
 				// Datafelt
 				private String navn;
 				private int behov;
-				private ArrayList<Integer> laererIndeks = new ArrayList();
-				private ArrayList<Integer> laererTimer = new ArrayList();
+				private ArrayList<Integer> laererIndeks = new ArrayList<Integer>();
+				private ArrayList<Integer> laererTimer = new ArrayList<Integer>();
 
 				// Konstruktoer
-				public FagInfo( Fag fag )
+				public FagInfo( int fagIndeks, Aarstrinn aarstrinn, Fag fag )
 				{
-					navn = fag.navn;
-					behov = fag.behov;
+					navn = fag.getfagNavn;
+					behov = aarstrinn.getTimer(fagIndeks);
 				}
 
 				// Metoder
