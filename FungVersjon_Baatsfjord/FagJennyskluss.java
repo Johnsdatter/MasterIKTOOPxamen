@@ -51,12 +51,12 @@ public class FagJennyskluss
 			{
 				for (int j = 0; j < 3; j++)
 				{
-					if (laerer[i].getspesialKompetanse(indeks) == fagNavn)
+					if (laerer[i].getspesialKompetanse(j)equals(fagNavn))
 					{
 
 						if (laerer[i].gettilgjengeligeTimer() > flestTimer)
 						{
-							flestTimer = laererNavn[i].gettilgjengeligeTimer();
+							flestTimer = laerer[i].gettilgjengeligeTimer();
 							laererIndeks = i;
 						}
 					}
