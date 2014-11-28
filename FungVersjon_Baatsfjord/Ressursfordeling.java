@@ -95,6 +95,10 @@ public class Ressursfordeling
 		laererRessurs[2].setTilgjengeligeTimer( 3 );
 		s = "" + laererRessurs[2].getTilgjengeligeTimer();
 		JOptionPane.showMessageDialog(null, "Endring av timetall:\n Opprinnelige timetall er 21 og reduseres med 3:\n Gjeldende timetall er: " + s, "Lærer", JOptionPane.PLAIN_MESSAGE );
+
+		Fordeling skoleplan = new Fordeling(fagRessurs, trinnRessurs, laererRessurs);
+		skoleplan.fordelLaerere(fagRessurs, trinnRessurs, laererRessurs);
+		JOptionPane.showMessageDialog(null, skoleplan.trinnPlan(laererRessurs), "Fordeling", JOptionPane.PLAIN_MESSAGE );
 	}
 //********************************** TEST SLUTT ***********************************************
 
