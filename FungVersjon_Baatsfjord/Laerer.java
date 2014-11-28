@@ -37,12 +37,14 @@ public class Laerer
 		spesielleTimer = sT;
 		stillingsProsent = sP;
 		tilgjengeligeTimer = tT;
+
 		for(int i = 0; i < 3; i++)
 		{
 			setSpesialKompetanse( i, sK[i] );
 			setSpesielleOppgaver( i, sO[i] );
 		}
 	}
+
 	private void setSpesialKompetanse( int i, String s )
 	{
 		spesialKompetanse[i] = s;
@@ -65,12 +67,10 @@ public class Laerer
 		return laererNavn;
 	}
 
-	/*
 	public String[] getSpesialKompetanse() // lager en get-metode som returnerer spesialKompetanse som string array
 	{
 		return spesialKompetanse;
 	}
-	*/
 
 	// lager en get-metode som returnerer verdien i posisjon gitt med int parameter indeks i string arrayet spesialKompetanse
 	public String getSpesialKompetanse(int indeks)
@@ -78,12 +78,11 @@ public class Laerer
 		return spesialKompetanse[ indeks ];
 	}
 
-	/*
 	public String[] getSpesielleOppgaver() // lager en get-metode som returnerer
 	{
 		return spesielleOppgaver;
 	}
-	*/
+
 
 	// lager en get-metode som returnerer verdien i posisjon gitt med int parameter indeks i string arrayet SpesielleOppgaver
 	public String getSpesielleOppgaver(int indeks)

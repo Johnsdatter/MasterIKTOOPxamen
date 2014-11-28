@@ -1,6 +1,6 @@
 /* Denne klassen samler tilgjengelige ressurser per faggruppe, uavhengig av trinnfordeling. Klassen brukes i fordelinga.
 * Kodingen er utført av Jenny Emelia Nikolaisen
-* Dette er versjon nr. 5 (17.11.14)
+* Dette er versjon nr. 6 (25.11.14)
 */
 
 public class Fag
@@ -31,37 +31,38 @@ public class Fag
 		//laererIndeks = metode_som_finner_indeksen_til(f);//???
 	}
 
-	public String getfagNavn() // lager en get-metode som returnerer faget
+	public String getFagNavn() // lager en get-metode som returnerer faget
 	{
 		return fagNavn;
 	}
-	/* må kommentere ut denne så lenge siden objektet laerer ikke er opprettet ennå
-	public String getLaerere() // lager en get-metode som returnerer lærere
-	{
-		return laerere;
-	}
-	*/
 
-/* Måte kommentere den ut da den gir kompileringsfeil på laerer[i].fordypning som ikke eksisterer.
-   Antar at den refererer til arrayet spesialKompetanse[n] i Laerer
-   Dermed må den omskrives litt
-		public int tilgjengeligLaerer(Laerer[] laerer) // Returnerer indeks til mest tilgjengelige lærer. Public fordi Andreas skal ha tilgang.
+	public int getLaererIndeks() // lager en get-metode som returnerer lærerindeksen
+	{
+		return laererIndeks;
+	}
+
+		public void tilgjengeligLaerer(Laerer[]laerer) // Returnerer indeks til mest tilgjengelige lærer. Public fordi Andreas skal ha tilgang.
+										 // Nei, nå returnerer den ikke en skit.... Hva gjør den så? "Bare" gjennomgår lærerne så
+										 // Andreas skal se hvilken lærer som har flest ledige timer til enhver tid? Innenfor fag.
 		{
-			int laererIndeks = 0;
 			int flestTimer = 0;
+
 			for (int i = 0 ; i < laerer.length ; i++) // Går igjennom alle lærerne
 			{
-				if (laerer[i].fordypning == fagNavn) // muligens endres, se Trudes koding for eksakte navn
+				for (int j = 0; j < 3; j++)
 				{
-					if (laerer[i].timer > flestTimer)
+					if (laerer[i].getSpesialKompetanse(j).equals(fagNavn))
 					{
-						flestTimer = laerer[i].timer;
-						laererIndeks = i;
+
+						if (laerer[i].getTilgjengeligeTimer() > flestTimer)
+						{
+							flestTimer = laerer[i].getTilgjengeligeTimer();
+							laererIndeks = i;
+						}
 					}
 				}
 			}
-			return laererIndeks;
-	}	// Slutt på tilgjengeligLaerer
-*/
+
+		}	// Slutt på tilgjengeligLaerer
 
 } // Slutt på klassen Fag

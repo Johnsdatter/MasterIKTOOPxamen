@@ -72,7 +72,7 @@ public class Ressursfordeling
 		String s = "";
 		for( int x = 0; x < antFag; x++)
 		{
-				s += fagRessurs[x].getfagNavn() + "\n";
+				s += fagRessurs[x].getFagNavn() + "\n";
 		}
 		JOptionPane.showMessageDialog(null, s, "Fag", JOptionPane.PLAIN_MESSAGE );
 

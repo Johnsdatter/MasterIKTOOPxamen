@@ -60,7 +60,7 @@ public class Fordeling
 				{
 					if (ledigFordypning)
 						fag[i].tilgjengeligLaerer(laerer); // Finner lærer med flest ledige fordypningstimer
-					int aktLaerer = fag[i].getlaererIndeks(); // Setter denne laereren som foerstevalg
+					int aktLaerer = fag[i].getLaererIndeks(); // Setter denne laereren som foerstevalg
 					int timerBundetLaerer = 0;
 					int tilgjengeligeTimer = laerer[aktLaerer].getTilgjengeligeTimer();
 
@@ -153,7 +153,7 @@ public class Fordeling
 	*/
 
 	{
-		String s = "Oversikt over fag paa trinn: " + /*this.trinn.get(i).navn + */i +"\n";
+		String s = "Oversikt over fag paa trinn: " + this.trinn.get(i).navn +"\n";
 
 		for (int j = 0 ; j < this.trinn.get(i).faginfo.size() ; j++)
 		{
@@ -202,7 +202,7 @@ public class Fordeling
 
 		public Trinn( Aarstrinn aarstrinn, Fag[] fag )
 		{
-			navn = ""; // aarstrinn.navn; OBS: Venter på implementasjon.
+			navn = aarstrinn.getTrinn();
 			for ( int i = 0 ; i < fag.length ; i++ )
 			{
 				faginfo.add(new FagInfo( i, aarstrinn, fag[i]));
@@ -224,7 +224,7 @@ public class Fordeling
 			// Konstruktoer
 			public FagInfo( int fagIndeks, Aarstrinn aarstrinn, Fag fag )
 			{
-				navn = fag.getfagNavn();
+				navn = fag.getFagNavn();
 				behov = aarstrinn.getTimer(fagIndeks);
 			}
 
