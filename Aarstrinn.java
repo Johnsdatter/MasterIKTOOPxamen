@@ -1,68 +1,81 @@
-// I denne klassen skjer det egentlig ingenting. 
-// Her bare defineres det variabler med tilhoerende datatyper, 
+// I denne klassen defineres det variabler med tilhoerende datatyper, 
 // det opprettes en tom konstruktoer,
-// det opprettes en konstruktoer med argumenter (hva det betyr, har jeg ikke helt grep om ennaa )
-// og det lages set og get metoder for variablene fag og timer som kan hentes fra andre klasser
+// det opprettes en konstruktoer med argumenter 
+// og det lages set og get metoder for variablene fag, timer og trinn som kan hentes fra andre klasser
 //
 
 
 public class Aarstrinn
 {
-	private int maksoppfoeringer ;
-	private String[] fag; //= new String // [maksoppfoeringer];
-	private int[] timer; //= new String[maksoppfoeringer];
+	private int maksoppfoeringer = 25 ;
+	private String[] fag = new String[maksoppfoeringer];
+	private int[] timer = new int[maksoppfoeringer];
+	private String[] trinn = new String[maksoppfoeringer];
 
 	//konstruktoer uten parametre, initialiserer klassen
-	public Aarstrinn( int m )
+	public Aarstrinn()
 	{
-		maksoppfoeringer = m;
-		fag = new String[maksoppfoeringer];
-		timer = new int[maksoppfoeringer];
-		for (int i = =; i < maksoppfoeringer; i++)
+		for (int i = 0; i < maksoppfoeringer; i++)
 		{
-			fag[i] = 0; timer[i] = "" ; 
+			fag[i] = "";
+			timer[i] = 0;
+			trinn[i]= "";
 		}
 	}
 
-	public Aarstrinn (String[] f, int [] t ) 
+	public Aarstrinn (String[] f, int [] t, String[] tr ) 
 		{
-			for ( int i = 0 ; i < maksoppfoeringer; i++)
+			int x = 0;
+			//sikrere metode for aa unngaa problemer med at arrayene har ulik stoerrelse
+			if (f.length <= maksoppfoeringer)
+			{for(int i = 0; i < f.length; i++)
 			{
-				
 				setFag ( i , f [i]);
-				setTimer ( i , t [i+1]) ;
+				setTimer ( i , t [i]) ;
+				setTrinn (i, tr[i]) ;
 			}
 		}
 		//konstruktoer med argumenter. 
-		public Aarstrinn (int indeks, String f, int t )
+		public Aarstrinn (int indeks, String f, int t, Strin tr )
 		{
 			setFag ( indeks, f ) ;
 			setTimer ( indeks, t ) ;
+			setTrinn ( indeks, tr) ;
 		}
 
-		//Set metode for tilordning av ny verdi til de lokale array variabelene fag og timer
-		//indeks viser til posisjon i arrayet og f er verdien som skal skrives inn
+		//Set metode for tilordning av ny verdi til de lokale array variabelene fag, timer og trinn
+		//indeks i viser til posisjon i arrayet og f er verdien som skal skrives inn
 
-		public void setFag ( int indeks, String f )
+		public void setFag ( int i, String f )
 		{
-			fag [indeks] = f ;
+			fag [i] = f ;
 		}
 
-		public void setTimer ( int indeks, int t ) 
+		public void setTimer ( int i, int t ) 
 		{
-			timer [indeks] = t ;
+			timer [i] = t ;
 		}
-
-		// Get metode for aa hente ut verdi i de lokale array variabelene fag og timer
-		// indeksen viser til posisjonen i arrayet verdien skal hentes fra
-		public int getTimer ( int indeks )
+		
+		public void setTrinn ( int i, String tr )
 		{
-			return timer [ indeks ] ;
+			trinn [i] = tr ;
 		}
 
-		public String getFag (int indeks )
-				{
-					return fag [indeks] ;
+		// Get metode for aa hente ut verdi i de lokale array variabelene fag, timer og trinn
+		// i viser til posisjonen i arrayet verdien skal hentes fra
+		public int getTimer ( int i )
+		{
+			return timer [ i ] ;
+		}
+
+		public String getFag ( int i )
+		{
+			return fag [i] ;
+		}
+		
+		public String getTrinn (int i )
+		{
+			return trinn ( int i );
 		}
 	}
 }
