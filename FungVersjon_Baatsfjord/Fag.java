@@ -1,6 +1,6 @@
 /* Denne klassen samler tilgjengelige ressurser per faggruppe, uavhengig av trinnfordeling. Klassen brukes i fordelinga.
 * Kodingen er utført av Jenny Emelia Nikolaisen
-* Dette er versjon nr. 6 (25.11.14)
+* Dette er versjon nr. 5 (17.11.14)
 */
 
 public class Fag
@@ -35,32 +35,33 @@ public class Fag
 	{
 		return fagNavn;
 	}
-
-	public int getlaererIndeks() // lager en get-metode som returnerer lærerindeksen
+	/* må kommentere ut denne så lenge siden objektet laerer ikke er opprettet ennå
+	public String getLaerere() // lager en get-metode som returnerer lærere
 	{
-		return laererIndeks;
+		return laerere;
 	}
+	*/
 
-		public void tilgjengeligLaerer() // Returnerer indeks til mest tilgjengelige lærer. Public fordi Andreas skal ha tilgang.
-										 // Nei, nå returnerer den ikke en skit.... Hva gjør den så? "Bare" gjennomgår lærerne så
-										 // Andreas skal se hvilken lærer som har flest ledige timer til enhver tid?
+/* Måte kommentere den ut da den gir kompileringsfeil på laerer[i].fordypning som ikke eksisterer.
+   Antar at den refererer til arrayet spesialKompetanse[n] i Laerer
+   Dermed må den omskrives litt
+		public int tilgjengeligLaerer(Laerer[] laerer) // Returnerer indeks til mest tilgjengelige lærer. Public fordi Andreas skal ha tilgang.
 		{
-			int lIndeks = 0;
+			int laererIndeks = 0;
 			int flestTimer = 0;
-
-			for (int i = 0 ; i < laererNavn.length ; i++) // Går igjennom alle lærerne
+			for (int i = 0 ; i < laerer.length ; i++) // Går igjennom alle lærerne
 			{
-				if (laererNavn[i].spesialKompetanse == fagNavn)
+				if (laerer[i].fordypning == fagNavn) // muligens endres, se Trudes koding for eksakte navn
 				{
-
-					if (laererNavn[i].tilgjengeligeTimer > flestTimer)
+					if (laerer[i].timer > flestTimer)
 					{
-						flestTimer = laererNavn[i].tilgjengeligeTimer;
-						lIndeks = i;
+						flestTimer = laerer[i].timer;
+						laererIndeks = i;
 					}
 				}
 			}
-
-		}	// Slutt på tilgjengeligLaerer
+			return laererIndeks;
+	}	// Slutt på tilgjengeligLaerer
+*/
 
 } // Slutt på klassen Fag
