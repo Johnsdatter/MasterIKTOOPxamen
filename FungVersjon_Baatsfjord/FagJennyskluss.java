@@ -31,19 +31,19 @@ public class FagJennyskluss
 		//laererIndeks = metode_som_finner_indeksen_til(f);//???
 	}
 
-	public String getfagNavn() // lager en get-metode som returnerer faget
+	public String getFagNavn() // lager en get-metode som returnerer faget
 	{
 		return fagNavn;
 	}
 
-	public int getlaererIndeks() // lager en get-metode som returnerer lærerindeksen
+	public int getLaererIndeks() // lager en get-metode som returnerer lærerindeksen
 	{
 		return laererIndeks;
 	}
 
 		public void tilgjengeligLaerer(Laerer[]laerer) // Returnerer indeks til mest tilgjengelige lærer. Public fordi Andreas skal ha tilgang.
 										 // Nei, nå returnerer den ikke en skit.... Hva gjør den så? "Bare" gjennomgår lærerne så
-										 // Andreas skal se hvilken lærer som har flest ledige timer til enhver tid?
+										 // Andreas skal se hvilken lærer som har flest ledige timer til enhver tid? Innenfor fag.
 		{
 			int flestTimer = 0;
 
@@ -51,12 +51,12 @@ public class FagJennyskluss
 			{
 				for (int j = 0; j < 3; j++)
 				{
-					if (laerer[i].getspesialKompetanse(j)equals(fagNavn))
+					if (laerer[i].getSpesialKompetanse(j).equals(fagNavn))
 					{
 
-						if (laerer[i].gettilgjengeligeTimer() > flestTimer)
+						if (laerer[i].getTilgjengeligeTimer() > flestTimer)
 						{
-							flestTimer = laerer[i].gettilgjengeligeTimer();
+							flestTimer = laerer[i].getTilgjengeligeTimer();
 							laererIndeks = i;
 						}
 					}
