@@ -41,22 +41,24 @@ public class FagJennyskluss
 		return laererIndeks;
 	}
 
-		public void tilgjengeligLaerer() // Returnerer indeks til mest tilgjengelige lærer. Public fordi Andreas skal ha tilgang.
+		public void tilgjengeligLaerer(Laerer[]laerer) // Returnerer indeks til mest tilgjengelige lærer. Public fordi Andreas skal ha tilgang.
 										 // Nei, nå returnerer den ikke en skit.... Hva gjør den så? "Bare" gjennomgår lærerne så
 										 // Andreas skal se hvilken lærer som har flest ledige timer til enhver tid?
 		{
-			int lIndeks = 0;
 			int flestTimer = 0;
 
-			for (int i = 0 ; i < laererNavn.length ; i++) // Går igjennom alle lærerne
+			for (int i = 0 ; i < laerer.length ; i++) // Går igjennom alle lærerne
 			{
-				if (laererNavn[i].spesialKompetanse == fagNavn)
+				for (int j = 0; j < 3; j++)
 				{
-
-					if (laererNavn[i].tilgjengeligeTimer > flestTimer)
+					if (laerer[i].getspesialKompetanse(indeks) == fagNavn)
 					{
-						flestTimer = laererNavn[i].tilgjengeligeTimer;
-						lIndeks = i;
+
+						if (laerer[i].gettilgjengeligeTimer() > flestTimer)
+						{
+							flestTimer = laererNavn[i].gettilgjengeligeTimer();
+							laererIndeks = i;
+						}
 					}
 				}
 			}
