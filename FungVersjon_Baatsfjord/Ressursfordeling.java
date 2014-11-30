@@ -1,24 +1,21 @@
-/***** Oppgave Ressursfordeling ********
-* Hovedklasse
-* Programmet skal ta i bruk to datasett,
-* ett med skolens behov for timefordeling pr. fag pr. årstrinn og
-* ett med tilgjengelige ressurser
-* (dvs. tilgjengelige lærere med ulik arbeidstid og kompetanse).
-* Ressursene lagres i klassene Lærer, Årstrinn og Fag, for å bli hentet inn
-* i klassen Fordeling som leser inn skolens behov og fordeler ressursene i
-* henhold til disse. Resultatet av fordelinga skal så lagres og visualiseres
-* i klassen Fordeling.
-
-< Opprette array av klassene årstrinn-, fag - og lærer  >
-< Lese fra fil for å definere array størrelser og hente data til hvert objekts datafelter.
-	Mulig utvidelse: Lage bruker-input >
-
-< Fordele timer og ressurser. Gjøres i/av klassen Fordeling >
-	< Opprette Fordelings-objekt og utføre nødvendige kall på dets metoder >
-
-< Gjøre kall på Fordelings-objektets metoder for å skrive oversikter til fil/dialogboks >
-
-*/
+/**********************************************************************************
+* Oppgave2: Ressursfordeling
+* *********************************************************************************
+* Programmerer: Rune Even Holmdal
+* Dato: 30.11.2014
+* *********************************************************************************
+* 
+*************************** Hovedklasse *******************************************
+* Programmet leser datafiler for skolens undervisningstilbud (ressursbehovet) og
+* hvilke ressurser som er tilgjengelige (ressurstilgangen). Dataene lagres i tre
+* array objekter basert på klasser, henholdsvis klassene Aarstrinn, Laerer og Fag. 
+* 
+* Klassen Fordeling fordeler ressurstilgangen i forhold til ressursbehovet. 
+* Resultatet av fordelinga blir visualiseres og lagret til fil.
+* 
+* Alle datafiler (input og output) er på csv-formatet.
+* 
+***********************************************************************************/
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileNotFoundException;
@@ -37,26 +34,22 @@ public class Ressursfordeling
 		// For å få tilgang til metodene i klassen Filbehandling
 		Filbehandling fil = new Filbehandling();
 
-		//**** Leser filene for å dimmensjonere arrayene av ressursklassene.
+		// Dimmensjonere arrayene av ressursklassene,
+		// ved å lese antall linjer i datafilene.
 		int antAarstrinn = fil.antLinjer( aarstrinnFilen );
 		int antFag = fil.antLinjer( fagFilen );
 		int antLaerer = fil.antLinjer( laererFilen );
 
-		//lager array-objekter av ressursklassene
+		// lager array-objekter av ressursklassene
 		Aarstrinn[] trinnRessurs = new Aarstrinn[ antAarstrinn ];
 		Fag[] fagRessurs = new Fag[ antFag ];
 		Laerer[] laererRessurs = new Laerer[ antLaerer ];
 
-		//**** Fyller objektene med informasjonen i datafilene
+		// Fyller objektene med informasjonen i datafilene
 		trinnRessurs = fil.lesAarstrinnRessurs( aarstrinnFilen, trinnRessurs );
 		fagRessurs = fil.lesFagRessurs( fagFilen, fagRessurs );
 		laererRessurs = fil.lesLaererRessurs( laererFilen, laererRessurs );
-
-/*********************************************************************************************
-*************                  TESTER INNHOLD I OBJEKTENE                      ***************
-*************        trinnRessurs, fagRessurs og laererRessurs                 ***************
-**********************************************************************************************/
-
+/* test: skriver ut innhold i objektene trinnRessurs, fagRessurs og laererRessurs
 		String s = "";
 		// ****** Test løkke for å lese ut trinnRessurs registrereinger
 		for( int x = 0; x < antAarstrinn; x++)
@@ -96,9 +89,13 @@ public class Ressursfordeling
 		s = "" + laererRessurs[2].getTilgjengeligeTimer();
 		JOptionPane.showMessageDialog(null, "Endring av timetall:\n Opprinnelige timetall er 21 og reduseres med 3:\n Gjeldende timetall er: " + s, "Lærer", JOptionPane.PLAIN_MESSAGE );
 //********************************** TEST SLUTT ***********************************************
-
+*/
+		// Fordeler ressurstilgangen etter ressursbehovet
 		Fordeling skoleplan = new Fordeling(fagRessurs, trinnRessurs, laererRessurs);
 		skoleplan.fordelLaerere(fagRessurs, trinnRessurs, laererRessurs);
-		JOptionPane.showMessageDialog(null, skoleplan.laererRessursEtterFordeling(laererRessurs), "Fordeling", JOptionPane.PLAIN_MESSAGE );
+		
+		// Skriver resultatet til skjerm.
+		JOptionPane.showMessageDialog(null, skoleplan.laererRessursEtterFordeling(laererRessurs),
+			"Fordeling", JOptionPane.PLAIN_MESSAGE );
 	}
 }
