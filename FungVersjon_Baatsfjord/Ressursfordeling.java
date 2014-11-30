@@ -4,17 +4,17 @@
 * Programmerer: Rune Even Holmdal
 * Dato: 30.11.2014
 * *********************************************************************************
-* 
+*
 *************************** Hovedklasse *******************************************
 * Programmet leser datafiler for skolens undervisningstilbud (ressursbehovet) og
 * hvilke ressurser som er tilgjengelige (ressurstilgangen). Dataene lagres i tre
-* array objekter basert på klasser, henholdsvis klassene Aarstrinn, Laerer og Fag. 
-* 
-* Klassen Fordeling fordeler ressurstilgangen i forhold til ressursbehovet. 
+* array objekter basert på klasser, henholdsvis klassene Aarstrinn, Laerer og Fag.
+*
+* Klassen Fordeling fordeler ressurstilgangen i forhold til ressursbehovet.
 * Resultatet av fordelinga blir visualiseres og lagret til fil.
-* 
+*
 * Alle datafiler (input og output) er på csv-formatet.
-* 
+*
 ***********************************************************************************/
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -49,6 +49,7 @@ public class Ressursfordeling
 		trinnRessurs = fil.lesAarstrinnRessurs( aarstrinnFilen, trinnRessurs );
 		fagRessurs = fil.lesFagRessurs( fagFilen, fagRessurs );
 		laererRessurs = fil.lesLaererRessurs( laererFilen, laererRessurs );
+
 /* test: skriver ut innhold i objektene trinnRessurs, fagRessurs og laererRessurs
 		String s = "";
 		// ****** Test løkke for å lese ut trinnRessurs registrereinger
@@ -93,7 +94,7 @@ public class Ressursfordeling
 		// Fordeler ressurstilgangen etter ressursbehovet
 		Fordeling skoleplan = new Fordeling(fagRessurs, trinnRessurs, laererRessurs);
 		skoleplan.fordelLaerere(fagRessurs, trinnRessurs, laererRessurs);
-		
+
 		// Skriver resultatet ut på skjermen.
 		JOptionPane.showMessageDialog(null, skoleplan.laererRessursEtterFordeling(laererRessurs),
 			"Fordeling", JOptionPane.PLAIN_MESSAGE );

@@ -1,16 +1,17 @@
 /**********************************************************************************
  * Klassen Filbehandling
- * 
+ *
  * Programmerer: Rune Even Holmdal
  * Dato: 30.11.2014
- * 
+ *
  **********************************************************************************
- * Metoder for lesing av fil, tilpasset klassene Aarstrinn, Fag og Laerer 
+ * Metoder for lesing av fil, tilpasset klassene Aarstrinn, Fag og Laerer
  *********************************************************************************/
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import javax.swing.JOptionPane;
 
 public class Filbehandling
 {
@@ -166,7 +167,7 @@ public class Filbehandling
 				spesielleTimer = Integer.parseInt( data[7] );
 				stillingsProsent = Integer.parseInt( data[8] );
 				tilgjengeligeTimer = Integer.parseInt( data[9] );
-				laererRessurs[i] = new Laerer( navn, kompetanse, oppgaver, 
+				laererRessurs[i] = new Laerer( navn, kompetanse, oppgaver,
 					spesielleTimer, stillingsProsent, tilgjengeligeTimer );
 				i++;
 			}
