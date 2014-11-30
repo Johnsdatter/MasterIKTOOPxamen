@@ -1,13 +1,21 @@
+/**********************************************************************************
+ * Klassen Filbehandling
+ * 
+ * Programmerer: Rune Even Holmdal
+ * Dato: 30.11.2014
+ * 
+ **********************************************************************************
+ * Metoder for lesing av fil, tilpasset klassene Aarstrinn, Fag og Laerer 
+ *********************************************************************************/
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import javax.swing.JOptionPane;
 
 public class Filbehandling
 {
 	// Finner antall linjer i filen.
-	public int antLinjer(String filNavn)
+	public int antLinjer( String filNavn )
 	{
 		BufferedReader br = null;
 		String lestData = "";
@@ -20,10 +28,10 @@ public class Filbehandling
 				antLinjer++;
 			}
 		}
-		catch (IOException e)
+		catch ( IOException e )
 		{
-			JOptionPane.showMessageDialog(null, "",
-				e.toString(), JOptionPane.PLAIN_MESSAGE );
+			JOptionPane.showMessageDialog( null, e.toString(),
+				"Fil error!", JOptionPane.PLAIN_MESSAGE );
 		}
 		finally
 		{
@@ -35,13 +43,13 @@ public class Filbehandling
 				}
 				catch (IOException e)
 				{
-					JOptionPane.showMessageDialog(null, "",
-						e.toString(), JOptionPane.PLAIN_MESSAGE );
+					JOptionPane.showMessageDialog( null, e.toString(),
+						"Fil error!", JOptionPane.PLAIN_MESSAGE );
 				}
 			}
 			return antLinjer;
 		}
-	}
+	} // slutt antLinjer
 
 	// Fyller et array objekt av klassen Fag med innhold fra fil
 	public Fag[] lesFagRessurs(String filNavn, Fag[] f)
@@ -60,8 +68,8 @@ public class Filbehandling
 		}
 		catch (IOException e)
 		{
-			JOptionPane.showMessageDialog(null, "",
-				e.toString(), JOptionPane.PLAIN_MESSAGE );
+			JOptionPane.showMessageDialog(null, e.toString(),
+				"Fil error!", JOptionPane.PLAIN_MESSAGE );
 		}
 		finally
 		{
@@ -73,16 +81,16 @@ public class Filbehandling
 				}
 				catch (IOException e)
 				{
-					JOptionPane.showMessageDialog(null, "",
-						e.toString(), JOptionPane.PLAIN_MESSAGE );
+					JOptionPane.showMessageDialog(null, e.toString(),
+						"Fil error!", JOptionPane.PLAIN_MESSAGE );
 				}
 			}
 			return f;
 		}
-	}
+	} // slutt lesFagRessurs
 
-		// Fyller et array objekt av klassen Aarstreinn med innhold fra fil
-	public Aarstrinn[] lesAarstrinnRessurs(String filNavn, Aarstrinn[] trinn)
+	// Fyller et array objekt av klassen Aarstrinn med innhold fra fil
+	public Aarstrinn[] lesAarstrinnRessurs( String filNavn, Aarstrinn[] trinn )
 	{
 		String lestData = "";
 		BufferedReader br = null;
@@ -109,8 +117,8 @@ public class Filbehandling
 		}
 		catch (IOException e)
 		{
-			JOptionPane.showMessageDialog(null, "",
-				e.toString(), JOptionPane.PLAIN_MESSAGE );
+			JOptionPane.showMessageDialog( null, e.toString(),
+				"Fil error!", JOptionPane.PLAIN_MESSAGE );
 		}
 		finally
 		{
@@ -120,18 +128,18 @@ public class Filbehandling
 				{
 					br.close();
 				}
-				catch (IOException e)
+				catch ( IOException e )
 				{
-					JOptionPane.showMessageDialog(null, "",
-						e.toString(), JOptionPane.PLAIN_MESSAGE );
+					JOptionPane.showMessageDialog( null, e.toString(),
+						"Fil error!", JOptionPane.PLAIN_MESSAGE );
 				}
 			}
 			return trinn;
 		}
-	}
+	} //slutt lesAarstrinnRessurs
 
 	// Fyller et array objekt av klassen Laerer med innhold fra fil
-	public Laerer[] lesLaererRessurs(String filNavn, Laerer[] laererRessurs)
+	public Laerer[] lesLaererRessurs( String filNavn, Laerer[] laererRessurs )
 	{
 		String lestData = "";
 		String navn = "";
@@ -142,14 +150,12 @@ public class Filbehandling
 		int tilgjengeligeTimer;
 		BufferedReader br = null;
 		int i = 0;
-
-		String s = "filinnhold ikke lest";
 		try
 		{
 			br = new BufferedReader( new FileReader(filNavn) );
 			while( ( lestData = br.readLine() ) != null )
 			{
-				String[] data = lestData.split(";");
+				String[] data = lestData.split( ";" );
 				navn = data[0];
 				kompetanse[0] = data[1];
 				kompetanse[1] = data[2];
@@ -160,14 +166,15 @@ public class Filbehandling
 				spesielleTimer = Integer.parseInt( data[7] );
 				stillingsProsent = Integer.parseInt( data[8] );
 				tilgjengeligeTimer = Integer.parseInt( data[9] );
-				laererRessurs[i] = new Laerer( navn, kompetanse, oppgaver, spesielleTimer, stillingsProsent, tilgjengeligeTimer );
+				laererRessurs[i] = new Laerer( navn, kompetanse, oppgaver, 
+					spesielleTimer, stillingsProsent, tilgjengeligeTimer );
 				i++;
 			}
 		}
-		catch (IOException e)
+		catch ( IOException e )
 		{
-			JOptionPane.showMessageDialog(null, "",
-				e.toString(), JOptionPane.PLAIN_MESSAGE );
+			JOptionPane.showMessageDialog( null, e.toString(),
+				"Fil error!", JOptionPane.PLAIN_MESSAGE );
 		}
 		finally
 		{
@@ -177,21 +184,14 @@ public class Filbehandling
 				{
 					br.close();
 				}
-				catch (IOException e)
+				catch ( IOException e )
 				{
-					JOptionPane.showMessageDialog(null, "",
-						e.toString(), JOptionPane.PLAIN_MESSAGE );
+					JOptionPane.showMessageDialog( null, e.toString(),
+						"Fil error!", JOptionPane.PLAIN_MESSAGE );
 				}
 			}
 			return laererRessurs;
 		}
 
-	}
-
-	// Lokal metode for å sende ut debug informasjon
-	private void debugMelding( String m )
-	{
-		JOptionPane.showMessageDialog(null, m, "Fra filbehandling", JOptionPane.PLAIN_MESSAGE );
-	}
-
+	} // slutt lesLaererRessurs
 }
