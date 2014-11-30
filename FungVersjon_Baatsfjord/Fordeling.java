@@ -1,20 +1,32 @@
-/*
-Til main:
-Fordeling skoleplan = new Fordeling(fagRessurs, trinnRessurs, laererRessurs);
-skoleplan.fordelLaerere(fagRessurs, trinnRessurs, laererRessurs);
-JOptionPane.showMessageDialog(null, skoleplan.trinnPlan(laererRessurs), "Fordeling", JOptionPane.PLAIN_MESSAGE );
-*/
+/**************************************************************************
+************************* Fordeling - formål ******************************
+***************************************************************************
 
-/*
-Klassen fordeling
-.fordelLaerere
-.ledigLaerer
-.trinnPlan
-	underklasse Trinn
-		underklasse Faginfo
-*/
+Klassen tar i bruk de ressurser og behov som er lest inn i klassene Fag,
+Laerer og Aarstrinn og fordeler disse så godt det lar seg gjøre.
+
+Deretter lagres resultatet i underklasser per trinn og fag for hvert trinn.
+Dette resultatet kan så returneres til main med egne metoder.
+
+Kodet av Andreas Neverdahl
+
+/**************************************************************************
+************************* Oppbygging av klassen ***************************
+***************************************************************************
+
+Fordeling					- Opprettes i main. Se formål.
+.fordelLaerere()			- Kalles i main. Kjører ressursfordeling.
+.ledigLaerer()				- Brukes av fordelLaerere().
+.trinnplan()				- Kalles i main. Genererer oversikt for trinn.
+.finnTrinnLaerere()			- Brukes av fordelLaerere().
+	underklasse Trinn		- Opprettes av super for lagring av fordeling.
+		underklasse Faginfo	- Samme som Trinn.
+		.leggTilLaerer()	- Brukes av fordelLaerere(). Lagrer lærere.
+
+***************************************************************************/
 
 import java.util.ArrayList;
+import javax.swing.JTextArea;
 
 public class Fordeling
 {
@@ -26,10 +38,6 @@ public class Fordeling
 
 	public Fordeling(Fag[] fag, Aarstrinn[] aarstrinn, Laerer[] laerer)
 	{
-		/*
-		Opprette instanser av visualiseringsklassene ihht. antall fag, aarstrinn og laerere.
-		*/
-
 		for ( int i = 0 ; i < aarstrinn.length ; i++ )
 		{
 			trinn.add(new Trinn(aarstrinn[i], fag));
@@ -44,11 +52,12 @@ public class Fordeling
 	/*
 	Metoden for selve fordelinga.
 
-	Prioriterer lærere med fordypning innenfor hvert fag, men bruker lærere uten fordypning der det trengs.
+	Prioriterer lærere med fordypning innenfor hvert fag,
+	men bruker lærere uten fordypning der det trengs.
 	*/
 
 	{
-		for ( int i = 0 ; i < fag.length ; i++) // For hvert enkelt fag skolen tilbyr
+		for ( int i = 0 ; i < fag.length ; i++) // For hvert fag skolen tilbyr
 		{
 			boolean ledigFordypning = true;
 			for ( int j = 0 ; j < aarstrinn.length ; j++ ) // For hvert aarstrinn paa skolen
@@ -147,13 +156,14 @@ public class Fordeling
 		return s;
 	}
 
-	public String trinnPlan(int i, Laerer[] laerer)
+	public JTextArea trinnPlan(int i, Laerer[] laerer)
 	/*
 	Samme som forrige, men kun et trinn om gangen
 	*/
 
 	{
-		String s = "Oversikt over fag paa trinn: " + this.trinn.get(i).navn +"\n";
+		JTextArea txt = new JTextArea();
+		txt.setText("Oversikt over fag på trinn: " + this.trinn.get(i).navn +"\n");
 
 		for (int j = 0 ; j < this.trinn.get(i).faginfo.size() ; j++)
 		{
@@ -170,6 +180,31 @@ public class Fordeling
 		}
 
 		return s;
+	}
+
+	public JTextArea laererRessursEtterFordeling(Laerer[] laerer)
+	{
+		JTextArea txt =	new JTextArea();
+		txt.setText("Gjennværende lærerressurser etter fordeling på fag:\n\n"+
+					"Navn\tLedige timer\tSpesielle oppgaver\n");
+
+		for (int i = 0 ; i < laerer.length ; i++ )
+		{
+			txt.append( laerer[i].getLaererNavn() + ":\t" + laerer[i].getTilgjengeligeTimer() + "\t");
+			String spesOppg = "";
+			for (int j = 0 ; j < 3 ; j++ )
+			{
+				if (!spesOppg.isEmpty() && !laerer[i].getSpesielleOppgaver(j).isEmpty())
+					spesOppg += ", " + laerer[i].getSpesielleOppgaver(j);
+				else
+					spesOppg = laerer[i].getSpesielleOppgaver(j);
+			}
+			if (spesOppg.isEmpty())
+				spesOppg = "Nei";
+			txt.append(spesOppg + "\n");
+		}
+
+		return txt;
 	}
 
 	public void finnTrinnLaerere()
@@ -208,8 +243,6 @@ public class Fordeling
 				faginfo.add(new FagInfo( i, aarstrinn, fag[i]));
 			}
 		}
-
-		// Metoder
 
 		// Underklasser
 
