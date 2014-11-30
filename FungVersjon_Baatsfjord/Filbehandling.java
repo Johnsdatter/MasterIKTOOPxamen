@@ -81,7 +81,7 @@ public class Filbehandling
 		}
 	}
 
-	// Fyller et array objekt av klassen Aarstreinn med innhold fra fil
+		// Fyller et array objekt av klassen Aarstreinn med innhold fra fil
 	public Aarstrinn[] lesAarstrinnRessurs(String filNavn, Aarstrinn[] trinn)
 	{
 		String lestData = "";
@@ -93,19 +93,19 @@ public class Filbehandling
 			while( ( lestData = br.readLine() ) != null )
 			{
 				String[] data = lestData.split(";");
-				String[] f = new String[data.length/2];
-				int[] t = new int [data.length/2];
+				String[] f = new String[ (data.length-1)/2 ];
+				int[] t = new int [ (data.length-1)/2 ];
 				int y = 0;
-				for ( int x = 0; x < data.length; x+=2 )
+				String id = data[0];
+				for ( int x = 1; x < data.length; x+=2 )
 				{
 					f[y] = data[x];
 					t[y] = Integer.parseInt( data[x+1] );
 					y++;
 				}
-				trinn[i] = new Aarstrinn( f, t );
+				trinn[i] = new Aarstrinn( f, t, id );
 				i++;
 			}
-
 		}
 		catch (IOException e)
 		{
@@ -188,7 +188,7 @@ public class Filbehandling
 
 	}
 
-	// Lokal metode for å sende ut debug informasjon
+	// Lokal metode for Ã¥ sende ut debug informasjon
 	private void debugMelding( String m )
 	{
 		JOptionPane.showMessageDialog(null, m, "Fra filbehandling", JOptionPane.PLAIN_MESSAGE );
