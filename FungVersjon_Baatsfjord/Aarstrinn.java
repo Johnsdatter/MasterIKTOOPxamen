@@ -38,7 +38,6 @@ public class Aarstrinn
 
 	//Set metode for tilordning av ny verdi til de lokale array variabelene fag, timer og trinn
 	//indeks i viser til posisjon i arrayet og f er verdien som skal skrives inn
-
 	public void setFag( int i, String f )
 	{
 		fag[ i ] = f ;
