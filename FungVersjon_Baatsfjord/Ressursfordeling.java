@@ -94,7 +94,7 @@ public class Ressursfordeling
 		Fordeling skoleplan = new Fordeling(fagRessurs, trinnRessurs, laererRessurs);
 		skoleplan.fordelLaerere(fagRessurs, trinnRessurs, laererRessurs);
 		
-		// Skriver resultatet til skjerm.
+		// Skriver resultatet ut på skjermen.
 		JOptionPane.showMessageDialog(null, skoleplan.laererRessursEtterFordeling(laererRessurs),
 			"Fordeling", JOptionPane.PLAIN_MESSAGE );
 	}
