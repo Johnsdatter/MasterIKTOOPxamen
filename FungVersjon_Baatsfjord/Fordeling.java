@@ -169,17 +169,17 @@ public class Fordeling
 		{
 			if (this.trinn.get(i).faginfo.get(j).behov > 0)
 			{
-				s += "\n" + this.trinn.get(i).faginfo.get(j).navn + ": ";
+				txt.append( "\n" + this.trinn.get(i).faginfo.get(j).navn + ": ");
 
 				for (int k = 0 ; k < this.trinn.get(i).faginfo.get(j).laererIndeks.size() ; k++)
 				{
-					s += laerer[trinn.get(i).faginfo.get(j).laererIndeks.get(k)].getLaererNavn() +
-						":" + this.trinn.get(i).faginfo.get(j).laererTimer.get(k) + "; ";
+					txt.append(laerer[trinn.get(i).faginfo.get(j).laererIndeks.get(k)].getLaererNavn() +
+						":" + this.trinn.get(i).faginfo.get(j).laererTimer.get(k) + "; ");
 				}
 			}
 		}
 
-		return s;
+		return txt;
 	}
 
 	public JTextArea laererRessursEtterFordeling(Laerer[] laerer)
