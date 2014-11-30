@@ -31,7 +31,7 @@ public class Ressursfordeling
 	{
 		int maksoppfoeringer = 25; //Samme som i klassen Aarstrinn
 		String aarstrinnFilen = "aarstrinnRessurs.csv";
-		String laererFilen = "lærerRessurs.csv";
+		String laererFilen = "laererRessurs.csv";
 		String fagFilen = "fagRessurs.csv";
 
 		// For å få tilgang til metodene i klassen Filbehandling
@@ -56,7 +56,7 @@ public class Ressursfordeling
 *************                  TESTER INNHOLD I OBJEKTENE                      ***************
 *************        trinnRessurs, fagRessurs og laererRessurs                 ***************
 **********************************************************************************************/
-/*
+
 		String s = "";
 		// ****** Test løkke for å lese ut trinnRessurs registrereinger
 		for( int x = 0; x < antAarstrinn; x++)
@@ -96,10 +96,9 @@ public class Ressursfordeling
 		s = "" + laererRessurs[2].getTilgjengeligeTimer();
 		JOptionPane.showMessageDialog(null, "Endring av timetall:\n Opprinnelige timetall er 21 og reduseres med 3:\n Gjeldende timetall er: " + s, "Lærer", JOptionPane.PLAIN_MESSAGE );
 //********************************** TEST SLUTT ***********************************************
-Helt hit */
 
 		Fordeling skoleplan = new Fordeling(fagRessurs, trinnRessurs, laererRessurs);
 		skoleplan.fordelLaerere(fagRessurs, trinnRessurs, laererRessurs);
-		JOptionPane.showMessageDialog(null, skoleplan.trinnPlan(laererRessurs), "Fordeling", JOptionPane.PLAIN_MESSAGE );
+		JOptionPane.showMessageDialog(null, skoleplan.laererRessursEtterFordeling(laererRessurs), "Fordeling", JOptionPane.PLAIN_MESSAGE );
 	}
 }
