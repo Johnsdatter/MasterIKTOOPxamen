@@ -1,24 +1,25 @@
-/* Dette er et objekt for hver enkelt tilgjengelige lærer, med navn, spesialkompetanse, oppgaver etc.
+/* Klasse for hver enkelt tilgjengelige lærer, med navn, spesialkompetanse, oppgaver etc.
  * Brukes for å lagre tilgjengelige ressurser for bruk i fordelingsklassen.
- * Kodingen er utfoert av Jenny Emelia Nikolaisen
- * Bearbeiding av Rune
- * Dette er versjon nr. 3 (23.11.14)
-*/
+ *
+ * Kodingen er utført av Jenny Emelia Nikolaisen
+ */
 
 import javax.swing.JOptionPane;
 
 public class Laerer
 {
-	private String laererNavn; //lærer som knyttes til kompetanse og oppgaver
-	private String[] spesialKompetanse = new String[3]; //fagene lærerne har kompetanse i, maks 3
-	private String[] spesielleOppgaver = new String[3]; //eks kontaktlærer, faglærer, IKT-ansvarlig osv., maks 3
-	private int spesielleTimer; //som går til spesielle oppgaver
-	private int stillingsProsent; //hvor mange prosent stilling har læreren
-	private int tilgjengeligeTimer; //totalt tilgjengelige timer som kan fordeles
+	private String laererNavn; // Lærer som knyttes til kompetanse og oppgaver
+	private String[] spesialKompetanse = new String[3]; // Fagene lærerne har kompetanse i, maks 3
+	private String[] spesielleOppgaver = new String[3]; // F.eks kontaktlærer, IKT-ansvarlig osv., maks 3
+	private int spesielleTimer; // All tid som trekkes fra undervisningstid
+	private int tilgjengeligeTimer; // Ledig undervisningstid
 
-	//konstruktoer uten parameter, initialiserer
+	// Konstruktører
+
 	public Laerer()
 	{
+		// Initialiserer objektet med tomme verdier
+
 		laererNavn = "";
 		for (int i = 0; i < 3; i++)
 		{
@@ -26,16 +27,15 @@ public class Laerer
 			spesielleOppgaver[i] = "";
 		}
 		spesielleTimer = 0;
-		stillingsProsent = 0;
 		tilgjengeligeTimer = 0;
 	}
 
-	//Konstruktør
-	public Laerer(String lN, String[] sK, String[] sO, int sT, int sP, int tT)
+	public Laerer(String lN, String[] sK, String[] sO, int sT, int tT)
 	{
+		// Setter verdier til objektet
+
 		laererNavn = lN;
 		spesielleTimer = sT;
-		stillingsProsent = sP;
 		tilgjengeligeTimer = tT;
 
 		for(int i = 0; i < 3; i++)
@@ -45,70 +45,61 @@ public class Laerer
 		}
 	}
 
-	private void setSpesialKompetanse( int i, String s )
-	{
-		spesialKompetanse[i] = s;
-	}
+	// Metoder
 
-	private void setSpesielleOppgaver( int i, String s )
-	{
-			spesielleOppgaver[i] = s;
-	}
-
-	//Gir mulighet for å endre timetallet etterhvert som lærer knyttes til oppgaver
-	//Sett fra hovedklassen er dette eneste variabel som krever set metode.
 	public void setTilgjengeligeTimer( int t )
 	{
+		/*
+		Trekker bundne timer fra tilgjengelig tid. Brukes i fordelinga.
+		*/
+
 		tilgjengeligeTimer -= t;
 	}
 
-	public String getLaererNavn() // lager en get-metode som returnerer lærernavnet
+	public String getLaererNavn()
 	{
+		/*
+		Returnerer lærernavnet
+		*/
+
 		return laererNavn;
 	}
 
-	public String[] getSpesialKompetanse() // lager en get-metode som returnerer spesialKompetanse som string array
-	{
-		return spesialKompetanse;
-	}
-
-	// lager en get-metode som returnerer verdien i posisjon gitt med int parameter indeks i string arrayet spesialKompetanse
 	public String getSpesialKompetanse(int indeks)
 	{
+		/*
+		Returnerer spesialkompetanse i gitt indeks
+		*/
+
 		return spesialKompetanse[ indeks ];
 	}
 
-	public String[] getSpesielleOppgaver() // lager en get-metode som returnerer
-	{
-		return spesielleOppgaver;
-	}
-
-
-	// lager en get-metode som returnerer verdien i posisjon gitt med int parameter indeks i string arrayet SpesielleOppgaver
 	public String getSpesielleOppgaver(int indeks)
 	{
+		/*
+		Returnerer spesiell oppgave av gitt indeks
+		*/
+
 		return spesielleOppgaver[indeks];
 	}
 
-	public int getSpesielleTimer() // lager en get-metode som returnerer
+	public int getSpesielleTimer()
 	{
+		/*
+		Returnerer antall spesielle timer
+		*/
+
 		return spesielleTimer;
 	}
 
-	public int getStillingsProsent() // lager en get-metode som returnerer
+	public int getTilgjengeligeTimer()
 	{
-		return stillingsProsent;
-	}
+		/*
+		Returnerer tilgjengelige timer minus spesielle timer,
+		som skal trekkes fra undervisningstid.
+		*/
 
-	public int getTilgjengeligeTimer() // lager en get-metode som returnerer
-	{
 		return tilgjengeligeTimer - spesielleTimer;
-	}
-
-	// metode for å sende debug informasjon
-	private void debugMelding ( String m)
-	{
-		JOptionPane.showMessageDialog(null, m, "Fra klassen Laerer.", JOptionPane.PLAIN_MESSAGE );
 	}
 
 } // Slutt på klassen Laerer

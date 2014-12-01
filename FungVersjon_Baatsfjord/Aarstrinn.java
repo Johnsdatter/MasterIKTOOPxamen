@@ -1,7 +1,8 @@
-// I denne klassen defineres det variabler med tilhoerende datatyper,
-// det opprettes en tom konstruktoer,
-// det opprettes en konstruktoer med argumenter
-// og det lages set og get metoder for variablene fag, timer og trinn som kan hentes fra andre klasser
+/* I denne klassen defineres det variabler med tilhørende datatyper
+ * for hvert årstrinn., samt set- og get-metoder for disse.
+ *
+ * Kodet av Kristina Johnsdatter Andreasen
+ */
 
 public class Aarstrinn
 {
@@ -10,9 +11,14 @@ public class Aarstrinn
 	private String[] fag = new String[maksoppfoeringer];
 	private int[] timer = new int[maksoppfoeringer];
 
-	//konstruktoer uten parametre, initialiserer klassen
+	// Konstruktører
+
 	public Aarstrinn()
 	{
+		/*
+		Oppretter objekt med tomme datafelter
+		*/
+
 		trinnNavn = "";
 		for ( int i = 0; i < maksoppfoeringer; i++ )
 		{
@@ -23,9 +29,13 @@ public class Aarstrinn
 
 	public Aarstrinn( String[] f, int [] t, String tr )
 	{
+		/*
+		Fyller objektet med data
+		*/
+
 		int x = 0;
 		setTrinn( tr );
-		//sikrere metode for aa unngaa problemer med at arrayene har ulik stoerrelse
+
 		if ( f.length <= maksoppfoeringer )
 		{
 			for( int i = 0; i < f.length; i++)
@@ -36,8 +46,8 @@ public class Aarstrinn
 		}
 	}
 
-	//Set metode for tilordning av ny verdi til de lokale array variabelene fag, timer og trinn
-	//indeks i viser til posisjon i arrayet og f er verdien som skal skrives inn
+	// Metoder, setter og returnerer objektets datafelter
+
 	public void setFag( int i, String f )
 	{
 		fag[ i ] = f ;
@@ -53,16 +63,14 @@ public class Aarstrinn
 		trinnNavn = tr ;
 	}
 
-	// Get metode for aa hente ut verdi i de lokale array variabelene fag, timer og trinn
-	// i viser til posisjonen i arrayet verdien skal hentes fra
-	public int getTimer( int i )
-	{
-		return timer[ i ] ;
-	}
-
 	public String getFag( int i )
 	{
 		return fag[ i ] ;
+	}
+
+	public int getTimer( int i )
+	{
+		return timer[ i ] ;
 	}
 
 	public String getTrinn()
