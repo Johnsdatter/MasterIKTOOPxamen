@@ -26,11 +26,14 @@ Fordeling					- Opprettes i main. Se formål.
 ***************************************************************************/
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 
 public class Fordeling
 {
 	// Datafelt
+	private int ressursFoerFordeling = 0;
+	private int skoleBehov = 0;
 	private ArrayList<Trinn> trinn = new ArrayList<Trinn>();
 
 
@@ -41,8 +44,17 @@ public class Fordeling
 		for ( int i = 0 ; i < aarstrinn.length ; i++ )
 		{
 			trinn.add(new Trinn(aarstrinn[i], fag));
+
+			for ( int j = 0 ; j < fag.length ; j++)
+			{
+				skoleBehov += aarstrinn[i].getTimer(j);
+			}
 		}
 
+		for ( int i = 0 ; i < laerer.length ; i++ )
+		{
+			ressursFoerFordeling += laerer[i].getTilgjengeligeTimer();
+		}
 	}
 
 	// Metoder
@@ -57,71 +69,84 @@ public class Fordeling
 	*/
 
 	{
-		for ( int i = 0 ; i < fag.length ; i++) // For hvert fag skolen tilbyr
+		if (skoleBehov > ressursFoerFordeling)
 		{
-			boolean ledigFordypning = true;
-			for ( int j = 0 ; j < aarstrinn.length ; j++ ) // For hvert aarstrinn paa skolen
+			JOptionPane.showMessageDialog(null, "Innlest timebehov er større enn tilgjengelige lærerressurser!" +
+				"\n\nTimebehov: " + skoleBehov +
+				"\nTilgjengelig: " + ressursFoerFordeling +
+				"\n\nProgrammet vil nå avslutte.", "Feil innverdier!", JOptionPane.ERROR_MESSAGE );
+			System.exit(0);
+		}
+		else
+		{
+			for ( int i = 0 ; i < fag.length ; i++) // For hvert fag skolen tilbyr
 			{
-				int timerBundet = 0;	// Hvor mange timer som er bundet til faget
-				int behov = aarstrinn[j].getTimer(i);
-
-				while ( behov > timerBundet ) // Faget [i] maa samsvare med indeksen i Fag
+				boolean ledigFordypning = true;
+				for ( int j = 0 ; j < aarstrinn.length ; j++ ) // For hvert innlest trinn
 				{
-					if (ledigFordypning)
-						fag[i].tilgjengeligLaerer(laerer); // Finner lærer med flest ledige fordypningstimer
-					int aktLaerer = fag[i].getLaererIndeks(); // Setter denne laereren som foerstevalg
-					int timerBundetLaerer = 0;
-					int tilgjengeligeTimer = laerer[aktLaerer].getTilgjengeligeTimer();
+					int timerBundet = 0;	// Hvor mange timer som er bundet til faget
+					int behov = aarstrinn[j].getTimer(i);
 
-					if ( tilgjengeligeTimer > 0 ) // Dersom aktuell laerer har fordypningstimer igjen
+					while ( behov > timerBundet ) // Kjører fordeling til behovet til fag i på trinn j er møtt
 					{
-						if ( tilgjengeligeTimer > behov )
+						if (ledigFordypning)
+							fag[i].tilgjengeligLaerer(laerer); // Finner lærer med flest ledige fordypningstimer
+						int aktLaerer = fag[i].getLaererIndeks(); // Setter denne læreren som førstevalg
+						int timerBundetLaerer = 0; // Midlertidig verdi av bundet tid hos aktLaerer
+						int tilgjengeligeTimer = laerer[aktLaerer].getTilgjengeligeTimer();
+
+						if ( tilgjengeligeTimer > 0 ) // Dersom aktuell lærer har fordypningstimer igjen
 						{
-							timerBundetLaerer = behov;
-							timerBundet = timerBundetLaerer;
+							if ( tilgjengeligeTimer > behov )
+							{
+								timerBundetLaerer = behov;
+								timerBundet = timerBundetLaerer;
+							}
+							else
+							{
+								timerBundetLaerer = tilgjengeligeTimer;
+								timerBundet += timerBundetLaerer;
+							}
 						}
-						else
+						else // Ikke mer fordypningstimer igjen. Bruker annen laerer.
 						{
-							timerBundetLaerer = tilgjengeligeTimer;
-							timerBundet += timerBundetLaerer;
+							ledigFordypning = false; // Er false helt til neste fag skal fordeles.
+							aktLaerer = ledigLaerer(laerer);
+							tilgjengeligeTimer = laerer[aktLaerer].getTilgjengeligeTimer();
+
+							if ( tilgjengeligeTimer > behov )
+							{
+								timerBundetLaerer = behov;
+								timerBundet = timerBundetLaerer;
+							}
+							else
+							{
+								timerBundetLaerer = tilgjengeligeTimer;
+								timerBundet += timerBundetLaerer;
+							}
 						}
-					}
-					else // Ikke mer fordypningstimer igjen. Bruker annen laerer
-					{
-						ledigFordypning = false;
-						aktLaerer = ledigLaerer(laerer);
-						tilgjengeligeTimer = laerer[aktLaerer].getTilgjengeligeTimer();
+						// Trekker bundet tid fra potten til gjeldende laerer
+						laerer[aktLaerer].setTilgjengeligeTimer(timerBundetLaerer);
 
-						if ( tilgjengeligeTimer > behov )
-						{
-							timerBundetLaerer = behov;
-							timerBundet = timerBundetLaerer;
-						}
-						else
-						{
-							timerBundetLaerer = tilgjengeligeTimer;
-							timerBundet += timerBundetLaerer;
-						}
-					}
-					laerer[aktLaerer].setTilgjengeligeTimer(timerBundetLaerer); // Trekker bundet tid fra potten til gjeldende laerer
-					// Registrerer laerer og antall timer
-					this.trinn.get(j).faginfo.get(i).leggTilLaerer(aktLaerer, timerBundetLaerer);
+						// Registrerer lærer og antall timer i resultatsobjektene
+						this.trinn.get(j).faginfo.get(i).leggTilLaerer(aktLaerer, timerBundetLaerer);
 
 
-				}	// Fordeling Aarstrinn[j]-loekke
+					}	// Fordeling Aarstrinn[j]-loekke
 
-			}	// Aarstrinn[]-loekke
+				}	// Aarstrinn[]-loekke
 
-		}	// Fag[]-loekke
+			}	// Fag[]-loekke
 
-		this.finnTrinnLaerere();
+			this.finnTrinnLaerere();
+		}
 
 	}	// fordelLaerere()
 
 	private int ledigLaerer(Laerer[] laerer)
 	{
 		/*
-		Returnerer indeks til laerer i angitt array med flest ledige timer
+		Returnerer indeks til lærer i angitt array med flest ledige timer
 		*/
 
 		int ledigIndeks = 0;
@@ -139,44 +164,38 @@ public class Fordeling
 
 	}	// ledigLaerer()
 
-	public String trinnPlan(Laerer[] laerer)
-	/*
-	Returnerer streng med oversikt over antall undervisningstimer for
-	hver laerer for hvert fag paa hvert trinn
-	*/
-
+	public JTextArea trinnPlan(Laerer[] laerer)
 	{
-		String s = "";
+		/*
+		Returnerer et JTextArea-objekt med trinnvis oversikt over hvor mange timer
+		hver lærer har i hvert fag.
+		*/
+
+		JTextArea txt = new JTextArea();
 
 		for (int i = 0 ; i < this.trinn.size() ; i++)
 		{
-			s += this.trinnPlan(i, laerer) + "\n\n";
-		}
+			txt.append( "Oversikt over lærertimer på " + this.trinn.get(i).navn + ". trinn:\n" +
+						"Fag\tLærer\ttimer");
 
-		return s;
-	}
-
-	public JTextArea trinnPlan(int i, Laerer[] laerer)
-	/*
-	Samme som forrige, men kun et trinn om gangen
-	*/
-
-	{
-		JTextArea txt = new JTextArea();
-		txt.setText("Oversikt over fag på trinn: " + this.trinn.get(i).navn +"\n");
-
-		for (int j = 0 ; j < this.trinn.get(i).faginfo.size() ; j++)
-		{
-			if (this.trinn.get(i).faginfo.get(j).behov > 0)
+			for (int j = 0 ; j < this.trinn.get(i).faginfo.size() ; j++)
 			{
-				txt.append( "\n" + this.trinn.get(i).faginfo.get(j).navn + ": ");
-
-				for (int k = 0 ; k < this.trinn.get(i).faginfo.get(j).laererIndeks.size() ; k++)
+				if (this.trinn.get(i).faginfo.get(j).behov > 0) // Sjekker at gjeldende fag er aktuelt på trinnet
 				{
-					txt.append(laerer[trinn.get(i).faginfo.get(j).laererIndeks.get(k)].getLaererNavn() +
-						":" + this.trinn.get(i).faginfo.get(j).laererTimer.get(k) + "; ");
+					txt.append( "\n" + this.trinn.get(i).faginfo.get(j).navn + ": \t");
+
+					for (int k = 0 ; k < this.trinn.get(i).faginfo.get(j).laererIndeks.size() ; k++)
+					{
+						if (k > 0) // Hopper ned en linje med innrykk dersom flere lærere har samme fag
+							txt.append("\n\t" + laerer[trinn.get(i).faginfo.get(j).laererIndeks.get(k)].getLaererNavn() +
+							"\t" + this.trinn.get(i).faginfo.get(j).laererTimer.get(k));
+						else
+							txt.append(laerer[trinn.get(i).faginfo.get(j).laererIndeks.get(k)].getLaererNavn() +
+							"\t" + this.trinn.get(i).faginfo.get(j).laererTimer.get(k));
+					}
 				}
 			}
+			txt.append("\n\n");
 		}
 
 		return txt;
@@ -184,12 +203,19 @@ public class Fordeling
 
 	public JTextArea laererRessursEtterFordeling(Laerer[] laerer)
 	{
+		/*
+		Returnerer et JTextArea-objekt med oversikt over gjenværende
+		lærerressurser.
+		*/
+
 		JTextArea txt =	new JTextArea();
 		txt.setText("Gjennværende lærerressurser etter fordeling på fag:\n\n"+
 					"Navn\tLedige timer\tSpesielle oppgaver\n");
+		int restLaererTimer = 0;
 
 		for (int i = 0 ; i < laerer.length ; i++ )
 		{
+			restLaererTimer += laerer[i].getTilgjengeligeTimer();
 			txt.append( laerer[i].getLaererNavn() + ":\t" + laerer[i].getTilgjengeligeTimer() + "\t");
 			String spesOppg = "";
 			for (int j = 0 ; j < 3 ; j++ )
@@ -203,12 +229,19 @@ public class Fordeling
 				spesOppg = "Nei";
 			txt.append(spesOppg + "\n");
 		}
+		txt.append( "\nTotalt antall timer tilgjengelig før fordeling:\t" + ressursFoerFordeling +
+					"\nSkolens timebehov:\t\t" + skoleBehov +
+					"\nResterende antall timer tilgjengelig:\t" + restLaererTimer);
 
 		return txt;
 	}
 
 	public void finnTrinnLaerere()
 	{
+		/*
+		Fyller arraylists med trinnlærere ut fra lærere i trinn.faginfo
+		*/
+
 		for ( int i = 0 ; i < this.trinn.size() ; i++ )
 		{
 			this.trinn.get(i).laererIndeks.clear();
@@ -229,6 +262,7 @@ public class Fordeling
 	public class Trinn
 	{
 		// Datafelt
+
 		private String navn; // 1. klasse/1/Vg1 e.l.
 		private ArrayList<Integer> laererIndeks = new ArrayList<Integer>();
 		private ArrayList<FagInfo> faginfo = new ArrayList<FagInfo>();
