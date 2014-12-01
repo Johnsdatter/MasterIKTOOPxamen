@@ -102,7 +102,7 @@ public class Laerer
 
 	public int getTilgjengeligeTimer() // lager en get-metode som returnerer
 	{
-		return tilgjengeligeTimer;
+		return tilgjengeligeTimer - spesielleTimer;
 	}
 
 	// metode for å sende debug informasjon

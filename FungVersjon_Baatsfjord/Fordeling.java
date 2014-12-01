@@ -223,7 +223,7 @@ public class Fordeling
 				if (!spesOppg.isEmpty() && !laerer[i].getSpesielleOppgaver(j).isEmpty())
 					spesOppg += ", " + laerer[i].getSpesielleOppgaver(j);
 				else
-					spesOppg = laerer[i].getSpesielleOppgaver(j);
+					spesOppg += laerer[i].getSpesielleOppgaver(j);
 			}
 			if (spesOppg.isEmpty())
 				spesOppg = "Nei";
