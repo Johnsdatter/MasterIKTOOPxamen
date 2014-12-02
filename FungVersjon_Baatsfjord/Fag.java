@@ -9,12 +9,17 @@ public class Fag
 	private String fagNavn;
 	private int laererIndeks;
 
-	// Konstruktør
+	// Konstruktører
 
 	public Fag()
 	{
 		fagNavn = "";
 		laererIndeks = 0;
+	}
+
+	public Fag(String f)
+	{
+			fagNavn = f;
 	}
 
 	// Metoder

@@ -56,6 +56,16 @@ public class Laerer
 		tilgjengeligeTimer -= t;
 	}
 
+	private void setSpesialKompetanse( int i, String s )
+	{
+		spesialKompetanse[i] = s;
+	}
+
+	private void setSpesielleOppgaver( int i, String s )
+	{
+		spesielleOppgaver[i] = s;
+	}
+
 	public String getLaererNavn()
 	{
 		/*
@@ -99,7 +109,7 @@ public class Laerer
 		som skal trekkes fra undervisningstid.
 		*/
 
-		return tilgjengeligeTimer - spesielleTimer;
+		return tilgjengeligeTimer;// - spesielleTimer;
 	}
 
 } // Slutt på klassen Laerer

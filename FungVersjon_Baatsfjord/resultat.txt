@@ -1,0 +1,55 @@
+Gjennværende lærerressurser etter fordeling på fag:
+
+Navn	Ledige timer	Spesielle oppgaver
+tor:	0	kontaktlærer
+ola:	7	kontaktlærer
+eli:	0	ikt
+kari:	11	Nei
+kay:	8	Nei
+britt:	10	kontaktlærer, spesped
+
+Totalt antall timer tilgjengelig før fordeling:	123
+Skolens timebehov:		85
+Resterende antall timer tilgjengelig:	36
+Oversikt over lærertimer på 5. trinn:
+Fag	Lærer	timer
+krl: 	tor	2
+nor: 	britt	6
+mat: 	eli	4
+samf: 	tor	2
+koh: 	tor	4
+nat: 	eli	2
+eng: 	ola	2
+mus: 	kari	2
+krÃ¸: 	tor	1
+	kay	3
+fyfo: 	kay	1
+
+Oversikt over lærertimer på 6. trinn:
+Fag	Lærer	timer
+krl: 	ola	2
+nor: 	ola	5
+mat: 	eli	4
+samf: 	tor	3
+koh: 	tor	3
+nat: 	eli	2
+eng: 	ola	2
+mus: 	kari	2
+krÃ¸: 	kay	2
+fyfo: 	kay	3
+
+Oversikt over lærertimer på 7. trinn:
+Fag	Lærer	timer
+krl: 	tor	2
+nor: 	britt	5
+mat: 	eli	5
+samf: 	tor	2
+koh: 	tor	2
+nat: 	eli	1
+	kari	3
+eng: 	ola	3
+mus: 	kari	2
+krÃ¸: 	kay	2
+fyfo: 	kay	2
+moh: 	kari	1
+

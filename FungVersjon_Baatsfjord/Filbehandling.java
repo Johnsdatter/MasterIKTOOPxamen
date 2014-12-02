@@ -9,12 +9,24 @@
  *********************************************************************************/
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
 
 public class Filbehandling
 {
+	private String[] fagArray;
+	private int indeksFagArray;
+
+	public Filbehandling ()
+	{
+		 fagArray = new String[25];
+		 indeksFagArray = 0;
+	}
+
 	// Finner antall linjer i filen.
 	public int antLinjer( String filNavn )
 	{
@@ -24,6 +36,7 @@ public class Filbehandling
 		try
 		{
 			br = new BufferedReader( new FileReader(filNavn) );
+			lestData = br.readLine(); // Leser første linje, overskrifter
 			while( ( lestData = br.readLine() ) != null )
 			{
 				antLinjer++;
@@ -52,7 +65,7 @@ public class Filbehandling
 		}
 	} // slutt antLinjer
 
-	// Fyller et array objekt av klassen Fag med innhold fra fil
+	// Metoden fyller array objektet av klassen Fag med innhold fra fil
 	public Fag[] lesFagRessurs(String filNavn, Fag[] f)
 	{
 		String lestData = "";
@@ -61,9 +74,10 @@ public class Filbehandling
 		try
 		{
 			br = new BufferedReader( new FileReader(filNavn) );
+			lestData = br.readLine(); // Leser første linje, overskrifter
 			while( ( lestData = br.readLine() ) != null )
 			{
-				f[i] = new Fag( lestData, 0 );
+				f[i] = new Fag( lestData );
 				i++;
 			}
 		}
@@ -90,7 +104,7 @@ public class Filbehandling
 		}
 	} // slutt lesFagRessurs
 
-	// Fyller et array objekt av klassen Aarstrinn med innhold fra fil
+	// Metoden fyller array objektet av klassen Aarstrinn med innhold fra fil
 	public Aarstrinn[] lesAarstrinnRessurs( String filNavn, Aarstrinn[] trinn )
 	{
 		String lestData = "";
@@ -99,6 +113,7 @@ public class Filbehandling
 		try
 		{
 			br = new BufferedReader( new FileReader(filNavn) );
+			lestData = br.readLine(); // Leser første linje, overskrifter
 			while( ( lestData = br.readLine() ) != null )
 			{
 				String[] data = lestData.split(";");
@@ -112,6 +127,7 @@ public class Filbehandling
 					t[y] = Integer.parseInt( data[x+1] );
 					y++;
 				}
+				//Boolean xxx = tilFagArray( f );
 				trinn[i] = new Aarstrinn( f, t, id );
 				i++;
 			}
@@ -139,7 +155,7 @@ public class Filbehandling
 		}
 	} //slutt lesAarstrinnRessurs
 
-	// Fyller et array objekt av klassen Laerer med innhold fra fil
+	// Metoden fyller array objektet av klassen Laerer med innhold fra fil
 	public Laerer[] lesLaererRessurs( String filNavn, Laerer[] laererRessurs )
 	{
 		String lestData = "";
@@ -147,13 +163,14 @@ public class Filbehandling
 		String[] kompetanse = new String[3];
 		String[] oppgaver = new String[3];
 		int spesielleTimer;
-		int stillingsProsent;
 		int tilgjengeligeTimer;
 		BufferedReader br = null;
 		int i = 0;
+		String s = "";
 		try
 		{
 			br = new BufferedReader( new FileReader(filNavn) );
+			lestData = br.readLine(); // Leser første linje, overskrifter
 			while( ( lestData = br.readLine() ) != null )
 			{
 				String[] data = lestData.split( ";" );
@@ -164,11 +181,11 @@ public class Filbehandling
 				oppgaver[0] = data[4];
 				oppgaver[1] = data[5];
 				oppgaver[2] = data[6];
+				s += data[7] + ", ";
 				spesielleTimer = Integer.parseInt( data[7] );
-				stillingsProsent = Integer.parseInt( data[8] );
-				tilgjengeligeTimer = Integer.parseInt( data[9] );
+				tilgjengeligeTimer = Integer.parseInt( data[8] );
 				laererRessurs[i] = new Laerer( navn, kompetanse, oppgaver,
-					spesielleTimer, stillingsProsent, tilgjengeligeTimer );
+					spesielleTimer, tilgjengeligeTimer );
 				i++;
 			}
 		}
@@ -195,4 +212,43 @@ public class Filbehandling
 		}
 
 	} // slutt lesLaererRessurs
+
+	// Metoden skriver innholdet i to JTextArea	objekter til en spesifisert fil
+	public Boolean skrivResultatfil( String filNavn, JTextArea a, JTextArea b )
+	{
+		Boolean suksess = true;
+		String resultat1 = a.getText();
+		String resultat2 = b.getText();
+		BufferedWriter bw = null;
+		try
+		{
+			// Lager en ny fil hver gang
+			bw = new BufferedWriter(new FileWriter("filNavn"));
+			bw.write( resultat1 );
+			bw.newLine();
+			bw.write ( resultat2 );
+		}
+		catch (IOException e)
+		{
+			JOptionPane.showMessageDialog(null, e.toString(),
+				"Fil error!", JOptionPane.PLAIN_MESSAGE );
+			suksess = false;
+		}
+		finally
+		{
+			if ( bw != null )
+			{
+				try
+				{
+					bw.close();
+				}
+				catch (IOException e)
+				{
+					JOptionPane.showMessageDialog(null, e.toString(),
+						"Fil error!", JOptionPane.PLAIN_MESSAGE );
+				}
+			}
+			return suksess;
+		}
+	} //  Slutt skrivResultatfil
 }
